@@ -27,7 +27,6 @@ class _ListRequestPageState extends State<ListRequestPage> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: colorScheme.primary,
         title: Text(widget.title),
       ),
       body: Center(

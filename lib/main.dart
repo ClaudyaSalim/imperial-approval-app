@@ -17,6 +17,7 @@ class MyApp extends StatelessWidget {
       // brightness: brightness, 
       primary: Color.fromRGBO(213, 141, 41, 1), 
       onPrimary: Color.fromRGBO(245, 241, 240, 1), 
+      primaryContainer: Color.fromRGBO(235, 221, 192, 1),
       secondary: Color.fromRGBO(79, 43, 31, 1), 
       // onSecondary: onSecondary, 
       // error: error, 
@@ -46,7 +47,11 @@ class MyApp extends StatelessWidget {
           backgroundColor: colorScheme.primary,
           foregroundColor: colorScheme.onPrimary,
           minimumSize: Size.fromHeight(50)
-        ))
+        )),
+        appBarTheme: AppBarTheme(
+          backgroundColor: colorScheme.primaryContainer,
+          elevation: 10.0
+        )
       ),
       routes: {
         '/':(context) => MyLoginPage(title: 'Login Page'),

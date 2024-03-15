@@ -41,8 +41,8 @@ class _MyLoginPageState extends State<MyLoginPage> {
               SizedBox(height: 50,),
               ElevatedButton(onPressed: () => {
                 Navigator.popAndPushNamed(context, '/list-request')
-              }, 
-                child: Text("Masuk", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+              },
+                child: Text("Masuk", style: textTheme.displayMedium!.copyWith(color: Colors.white)),
                 style: theme.elevatedButtonTheme.style
               ), // nanti pake OTP atau verifikasi email kalo baru pertama kali login
             ],
