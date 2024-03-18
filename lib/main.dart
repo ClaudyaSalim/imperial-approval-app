@@ -68,12 +68,12 @@ class MyApp extends StatelessWidget {
           elevation: 10.0
         )
       ),
-      home: MyLoginPage(title: 'Login Page'),
+      home: const LoginPage(),
       routes: {
-        '/login':(context) => MyLoginPage(title: 'Login Page'),
+        '/login':(context) => LoginPage(),
         '/list-request': (context) => MenuPage(),
       },
-      // home: const MyLoginPage(title: 'Login Page'),
+      // home: const LoginPage(title: 'Login Page'),
     );
   }
 }

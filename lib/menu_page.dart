@@ -18,7 +18,7 @@ class _MenuPageState extends State<MenuPage> {
   List listMenu = [
     MenuClass("List Request", ListRequest()),
     MenuClass("List Draft", DraftRequest()),
-    MenuClass("Logout", MyLoginPage(title: "Login Page",))
+    MenuClass("Logout", LoginPage())
   ];
   late MenuClass activePage;
 
