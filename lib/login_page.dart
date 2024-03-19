@@ -1,13 +1,7 @@
 import 'package:flutter/material.dart';
 
-class LoginPage extends StatefulWidget {
+class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
-
-  @override
-  State<LoginPage> createState() => _LoginPageState();
-}
-
-class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
@@ -31,17 +25,15 @@ class _LoginPageState extends State<LoginPage> {
               SizedBox(height: 50,),
               TextField(
                 decoration: InputDecoration(
-                  border: OutlineInputBorder(),
                   labelText: "Email Karyawan",
-                  hintText: "Masukkan ID Karyawan"
+                  hintText: "Masukkan ID Karyawan",
                 ) ,
               ),
               SizedBox(height: 50,),
               ElevatedButton(onPressed: () => {
-                Navigator.popAndPushNamed(context, '/list-request')
+                Navigator.popAndPushNamed(context, '/home')
               },
-                child: Text("Masuk", style: textTheme.displayMedium!.copyWith(color: Colors.white)),
-                style: theme.elevatedButtonTheme.style
+                child: Text("Masuk"),
               ), // nanti pake OTP atau verifikasi email kalo baru pertama kali login
             ],
           ),

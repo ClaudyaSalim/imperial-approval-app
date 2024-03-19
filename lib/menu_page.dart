@@ -48,18 +48,17 @@ class _MenuPageState extends State<MenuPage> {
   @override
   Widget build(BuildContext context) {
 
-    // final ThemeData theme = Theme.of(context);
-    // final ColorScheme colorScheme = theme.colorScheme;
+    final ThemeData theme = Theme.of(context);
+    final ColorScheme colorScheme = theme.colorScheme;
     // final TextTheme textTheme = theme.textTheme;
 
-    listMenu[0].hasMainButton = FloatingActionButton(onPressed: null);
+    listMenu[0].hasMainButton = FloatingActionButton(onPressed: () {print("add");}, child: Icon(Icons.add_rounded),);
     
     return Scaffold(
       appBar: AppBar(
-        title: Text(activePage.name),
+        title: Text(activePage.name,),
       ),
       drawer: Drawer(
-        width: 200,
         child: ListView(
           children: [
             UserAccountsDrawerHeader(accountName: Text("Test User"), accountEmail: Text("test@email.com")),
@@ -88,7 +87,8 @@ class _MenuPageState extends State<MenuPage> {
                     setMenuPage(selectedIndex);
                   },
                   title: (
-                    Text(listMenu[index].name)
+                    Text(listMenu[index].name, 
+                    style: (listMenu[index].name=='Logout')?TextStyle(color: colorScheme.error):null)
                   ),
                   selected: selected,
                 );
@@ -97,7 +97,8 @@ class _MenuPageState extends State<MenuPage> {
           ],
         ),
       ),
-      body: Center(
+      body: Padding(
+        padding: EdgeInsets.all(16.0),
         // kemungkinan isi fragment disini
         child: activePage.body,
         // child: Column(
