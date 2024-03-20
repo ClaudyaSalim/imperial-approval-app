@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:imperial_approval_app/draft_request.dart';
 import 'package:imperial_approval_app/list_request.dart';
-import 'package:imperial_approval_app/menu_class.dart';
+import 'package:imperial_approval_app/model/menu_class.dart';
 import 'login_page.dart';
 import 'notifikasi.dart';
 

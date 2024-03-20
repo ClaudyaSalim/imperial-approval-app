@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class ListRequest extends StatefulWidget {
   const ListRequest({super.key});
@@ -44,11 +45,49 @@ class _ListRequestState extends State<ListRequest> {
               ];
             }
         }),
+        SizedBox(height: 50,),
 
         // list request
-        DataTable(
-          columns: [], 
-          rows: [],
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            LayoutBuilder(
+              builder: (context, constraints) {
+                double fullWidth = constraints.maxWidth-112;
+                return DataTable(
+                // sortColumnIndex: 0,
+                // sortAscending: true,
+                  columns: [
+                    DataColumn(
+                      label: SizedBox(child: Text("No"), width: fullWidth*0.1,),
+                    ),
+                    DataColumn(
+                      label: SizedBox(child: Text("Request"), width: fullWidth*0.7,),
+                    ),
+                    DataColumn(
+                      label: SizedBox(child: Text("Status"), width: fullWidth*0.25,)
+                    ),
+                  ], 
+                  rows: const [
+                    DataRow(
+                      cells: [
+                        DataCell(Text("1")),
+                        DataCell(Text("Request Pertama")),
+                        DataCell(Text("Pending")),
+                      ]
+                    ),
+                    DataRow(
+                      cells: [
+                        DataCell(Text("2")),
+                        DataCell(Text("Request Kedua\nKepada:")),
+                        DataCell(Text("Pending")),
+                      ]
+                    )
+                  ],
+                );
+              },
+            ),
+          ],
         ),
       ],
     );
