@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:imperial_approval_app/menu_page.dart';
+import 'package:imperial_approval_app/model/menu_class.dart';
+import 'package:imperial_approval_app/view/base_page.dart';
 import 'package:imperial_approval_app/theme/appbar_theme.dart';
 import 'package:imperial_approval_app/theme/button_theme.dart';
 import 'package:imperial_approval_app/theme/color_scheme.dart';
@@ -7,7 +8,8 @@ import 'package:imperial_approval_app/theme/drawer_theme.dart';
 import 'package:imperial_approval_app/theme/search_bar_theme.dart';
 import 'package:imperial_approval_app/theme/text_field_theme.dart';
 import 'package:imperial_approval_app/theme/text_theme.dart';
-import 'login_page.dart';
+import 'package:imperial_approval_app/view/subpages/list_request.dart';
+import 'view/login_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -36,7 +38,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/login',
       routes: {
         '/login':(context) => LoginPage(),
-        '/home': (context) => MenuPage(),
+        '/home': (context) => BasePage(activePage: MenuClass("List Request", ListRequest())),
       },
     );
   }
