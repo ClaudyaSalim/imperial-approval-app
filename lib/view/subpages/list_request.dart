@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:imperial_approval_app/model/request_class.dart';
 
 class ListRequest extends StatefulWidget {
   const ListRequest({super.key});
@@ -14,6 +16,10 @@ class _ListRequestState extends State<ListRequest> {
 
     final ThemeData theme = Theme.of(context);
     final ColorScheme colorScheme = theme.colorScheme;
+    List<Request>requestList = [
+      Request(judul: "Request 1", jenis: "PO Proyek", pemberi: "Budi, Purchasing SPV", penerima: ["Icha, Purchasing Manager"], status: "Pending"),
+      Request(judul: "Request 2", jenis: "Invoice Utilitas", pemberi: "Anna, Finance Head", penerima: ["Andi, Manager Proyek", "William, CEO"], status: "Diterima")
+    ];
 
     return Column(
       children: [
@@ -21,7 +27,7 @@ class _ListRequestState extends State<ListRequest> {
         // search bar
         SearchAnchor.bar(
           barHintText: "Cari request ...",
-          isFullScreen: false,
+          // isFullScreen: false,
           suggestionsBuilder: (BuildContext context, SearchController controller) {
             List searchHistory = [];
             int numHistory = searchHistory.length;
@@ -48,46 +54,53 @@ class _ListRequestState extends State<ListRequest> {
         SizedBox(height: 50,),
 
         // list request
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            LayoutBuilder(
-              builder: (context, constraints) {
-                double fullWidth = constraints.maxWidth-112;
-                return DataTable(
-                // sortColumnIndex: 0,
-                // sortAscending: true,
-                  columns: [
+        Expanded(
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                DataTable(
+                  dataRowMinHeight: 120,
+                  dataRowMaxHeight: 150,
+                  // sortColumnIndex: 0,
+                  // sortAscending: true,
+                  columns: const <DataColumn> [
                     DataColumn(
-                      label: SizedBox(child: Text("No"), width: fullWidth*0.1,),
+                      label: SizedBox(child: Text("No"), width: 25,),
                     ),
                     DataColumn(
-                      label: SizedBox(child: Text("Request"), width: fullWidth*0.7,),
+                      label: SizedBox(child: Text("Request"),),
                     ),
-                    DataColumn(
-                      label: SizedBox(child: Text("Status"), width: fullWidth*0.25,)
-                    ),
+                    // DataColumn(
+                    //   label: SizedBox(child: Text("Status"), width: fullWidth*0.25,)
+                    // ),
                   ], 
-                  rows: const [
-                    DataRow(
+                      
+                  rows: requestList.map(
+                    (data) => DataRow(
                       cells: [
-                        DataCell(Text("1")),
-                        DataCell(Text("Request Pertama")),
-                        DataCell(Text("Pending")),
+                        DataCell(Text(requestList.indexOf(data).toString())),
+                        DataCell(
+                          SizedBox(
+                            child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(data.judul, overflow: TextOverflow.ellipsis,),
+                              Text(data.jenis, overflow: TextOverflow.ellipsis),
+                              Text("Diajukan oleh: " + data.pemberi, overflow: TextOverflow.ellipsis),
+                              Text("Approval berikutnya: " + data.penerima[0], overflow: TextOverflow.ellipsis),
+                              Text("Status: " + data.status, overflow: TextOverflow.ellipsis),
+                              TextButton(onPressed: (){}, child: Text("Detail"))                                               
+                            ]),
+                          )
+                        ),
                       ]
-                    ),
-                    DataRow(
-                      cells: [
-                        DataCell(Text("2")),
-                        DataCell(Text("Request Kedua\nKepada:")),
-                        DataCell(Text("Pending")),
-                      ]
-                    )
-                  ],
-                );
-              },
-            ),
-          ],
+                    )).toList()
+                ),
+              ]
+            )
+          ),
         ),
       ],
     );

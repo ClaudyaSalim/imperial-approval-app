@@ -4,12 +4,11 @@ import 'package:imperial_approval_app/components/drawer.dart';
 import 'package:imperial_approval_app/view/subpages/list_request.dart';
 import 'package:imperial_approval_app/model/menu_class.dart';
 import 'login_page.dart';
-import 'subpages/notifikasi.dart';
 
 class BasePage extends StatefulWidget {
   BasePage({super.key, required this.activePage});
 
-  MenuClass activePage;
+  final MenuClass activePage;
 
   @override
   State<BasePage> createState() => _BasePageState();

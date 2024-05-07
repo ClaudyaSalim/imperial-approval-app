@@ -2,15 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:imperial_approval_app/model/menu_class.dart';
 import 'package:imperial_approval_app/theme/color_scheme.dart';
 import 'package:imperial_approval_app/view/base_page.dart';
-import 'package:imperial_approval_app/view/subpages/draft_request.dart';
-import 'package:imperial_approval_app/view/subpages/list_request.dart';
-import 'package:imperial_approval_app/view/login_page.dart';
 import 'package:imperial_approval_app/view/subpages/notifikasi.dart';
 
 class CustomDrawer extends StatefulWidget {
   CustomDrawer({super.key, required this.listMenu, required this.activePage});
 
-  List listMenu; MenuClass activePage;
+  final List listMenu; final MenuClass activePage;
 
   @override
   State<CustomDrawer> createState() => _CustomDrawerState();
@@ -18,12 +15,6 @@ class CustomDrawer extends StatefulWidget {
 
 class _CustomDrawerState extends State<CustomDrawer> {
 
-  // late int selectedIndex;
-  // List listMenu = [
-  //   MenuClass("List Request", ListRequest()),
-  //   MenuClass("List Draft", DraftRequest()),
-  //   MenuClass("Logout", LoginPage())
-  // ];
   late MenuClass targetPage;
   late int selectedIndex;
   late List menuList;
