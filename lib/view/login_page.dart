@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:imperial_approval_app/theme/text_theme.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -6,8 +7,8 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final ThemeData theme = Theme.of(context);
-    final TextTheme textTheme = theme.textTheme;
+    // final ThemeData theme = Theme.of(context);
+    // final TextTheme textTheme = theme.textTheme;
 
     return Scaffold(
       body: Padding(
