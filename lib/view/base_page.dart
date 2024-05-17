@@ -68,7 +68,7 @@ class _BasePageState extends State<BasePage> {
       ),
       drawer: CustomDrawer(listMenu: listMenu, activePage: targetPage,),
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: EdgeInsets.all(25.0),
         // kemungkinan isi fragment disini
         child: targetPage.body,
       ),

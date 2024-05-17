@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:imperial_approval_app/theme/color_scheme.dart';
+import 'package:imperial_approval_app/theme/search_bar_theme.dart';
 
 class CustomSearchBar extends StatefulWidget {
   const CustomSearchBar({super.key});
@@ -14,14 +15,18 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
   Widget build(BuildContext context) {
     return SearchAnchor.bar(
           barHintText: "Cari request ...",
+          onChanged: (value) {
+              // ...
+          },
           // isFullScreen: false,
           suggestionsBuilder: (BuildContext context, SearchController controller) {
-            List searchHistory = [];
+            List searchHistory = ["a", "b", "a", "a"];
             int numHistory = searchHistory.length;
             if(numHistory>0) {
               return List.generate(numHistory, 
                 (index) =>
                   ListTile(
+                    tileColor: colorScheme.tertiaryContainer,
                     title: Text(searchHistory[index]),
                     onTap: () {
                       if(numHistory>0){
@@ -34,7 +39,7 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
               );
             } else {
               return <Widget> [
-                ListTile(title: Text("Tidak ada pencarian terbaru", style: TextStyle(color: colorScheme.tertiary),),)
+                ListTile(tileColor: colorScheme.tertiaryContainer, title: Text("Tidak ada pencarian terbaru",),)
               ];
             }
         });
