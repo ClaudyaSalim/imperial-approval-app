@@ -18,7 +18,7 @@ class _StatusDropdownState extends State<StatusDropdown> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      // width: ,
+      width: 50,
       child: DropdownMenu(
         leadingIcon: Icon(Icons.filter_alt),
         hintText: dropValue.status,

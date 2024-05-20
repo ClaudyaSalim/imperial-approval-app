@@ -34,7 +34,7 @@ class _ListRequestState extends State<ListRequest> {
 
         // search bar
         CustomSearchBar(),
-        // SizedBox(height: 50,),
+        SizedBox(height: 10,),
 
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -83,7 +83,7 @@ class _ListRequestState extends State<ListRequest> {
                               Flexible(child: Text("Diajukan oleh: " + data.pemberi, overflow: TextOverflow.ellipsis)),
                               Flexible(child: Text("Approval berikutnya: " + data.penerima[0], overflow: TextOverflow.ellipsis, maxLines: 1,)),
                               Flexible(child: Text("Status: " + data.status, overflow: TextOverflow.ellipsis)),
-                              TextButton(onPressed: (){}, child: Text("Detail"))                                               
+                              TextButton(onPressed: (){Navigator.pushNamed(context, '/detail');}, child: Text("Detail"))                                               
                             ]),
                           )
                         ),

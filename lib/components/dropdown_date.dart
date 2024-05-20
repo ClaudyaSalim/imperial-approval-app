@@ -19,6 +19,7 @@ class _DateDropdownState extends State<DateDropdown> {
   Widget build(BuildContext context) {
     return SizedBox(
       child: DropdownMenu(
+        width: 150,
         label: Text("Pilih tanggal"),
         leadingIcon: Icon(Icons.date_range_rounded),
         // hintText: "7 hari",
