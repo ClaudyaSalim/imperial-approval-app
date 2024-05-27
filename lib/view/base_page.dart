@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:imperial_approval_app/view/subpages/history_page.dart';
 import 'package:imperial_approval_app/view/subpages/draft_request.dart';
 import 'package:imperial_approval_app/components/drawer.dart';
 import 'package:imperial_approval_app/view/subpages/list_request.dart';
@@ -6,9 +7,9 @@ import 'package:imperial_approval_app/model/menu_class.dart';
 import 'login_page.dart';
 
 class BasePage extends StatefulWidget {
-  BasePage({super.key, required this.activePage});
+  BasePage({super.key, this.activePage});
 
-  final MenuClass activePage;
+  MenuClass? activePage;
 
   @override
   State<BasePage> createState() => _BasePageState();
@@ -20,47 +21,25 @@ class _BasePageState extends State<BasePage> {
   List listMenu = [
     MenuClass("List Request", ListRequest()),
     MenuClass("List Draft", DraftRequest()),
+    MenuClass("History", HistoryPage()),
     MenuClass("Logout", LoginPage())
   ];
 
-  // @override
-  // void initState() {
-  //   // super.initState();
-  //   // selectedIndex = 0;
-  //   widget.activePage = listMenu[0];
-  //   bodyPage = widget.activePage;
-  // }
-
-  // @override
-  // void setState(VoidCallback fn) {
-  //   // TODO: implement setState
-  //   super.setState(fn);
-
-  //   if(widget.activePage!=listMenu[0]){
-  //     bodyPage = widget.activePage;
-  //   }
-  // }
-
-  // void setBasePage(int selectedIndex){
-  //   if(selectedIndex==listMenu.length-1){
-  //     Navigator.popAndPushNamed(context, '/login');
-  //     return;
-  //   }
-  //   setState(() {
-  //     if(selectedIndex==-1){
-  //       activePage = MenuClass("Notifikasi", Notif());
-  //     }
-  //     else {
-  //       activePage = listMenu[selectedIndex];
-  //     }
-  //     Navigator.pop(context);
-  //   });
-  // }
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
 
-    MenuClass targetPage = widget.activePage;
+    if(widget.activePage==null){
+      widget.activePage = listMenu[0]; 
+    }
+
+    listMenu[0].hasMainButton = FloatingActionButton(onPressed: (){Navigator.pushNamed(context, '/create-request');}, child: Icon(Icons.add_rounded),);
+
+    MenuClass targetPage = widget.activePage!;
     
     return Scaffold(
       appBar: AppBar(

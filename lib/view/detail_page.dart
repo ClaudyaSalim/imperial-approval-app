@@ -5,18 +5,24 @@ import 'package:imperial_approval_app/theme/color_scheme.dart';
 import 'package:imperial_approval_app/theme/text_theme.dart';
 
 class DetailPage extends StatefulWidget {
-  const DetailPage({super.key});
+  DetailPage({super.key, required this.isDraft});
+
+  bool isDraft;
 
   @override
   State<DetailPage> createState() => _DetailPageState();
 }
 
 class _DetailPageState extends State<DetailPage> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("Detail Request",),
+        actions: [
+          if(widget.isDraft) Icon(Icons.delete_rounded)
+        ],
       ),
       body: Padding(
         padding: EdgeInsets.all(25.0),
@@ -71,6 +77,11 @@ class _DetailPageState extends State<DetailPage> {
           ),
         ),
       ),
+      floatingActionButton: (!widget.isDraft)? null:
+        FloatingActionButton(
+          onPressed: (){Navigator.pushNamed(context, '/create-request');},
+          child: Icon(Icons.edit_rounded),
+        ),
     );
   }
 }

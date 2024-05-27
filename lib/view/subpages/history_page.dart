@@ -1,31 +1,22 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:imperial_approval_app/components/dropdown_date.dart';
 import 'package:imperial_approval_app/components/dropdown_status.dart';
 import 'package:imperial_approval_app/components/search_bar.dart';
 import 'package:imperial_approval_app/model/request_class.dart';
-import 'package:imperial_approval_app/model/status_class.dart';
-import 'package:imperial_approval_app/model/status_filter.dart';
-import 'package:imperial_approval_app/theme/color_scheme.dart';
 
-class ListRequest extends StatefulWidget {
-  const ListRequest({super.key});
+class HistoryPage extends StatefulWidget {
+  const HistoryPage({super.key});
 
   @override
-  State<ListRequest> createState() => _ListRequestState();
+  State<HistoryPage> createState() => _HistoryPageState();
 }
 
-class _ListRequestState extends State<ListRequest> {
-
-  // FilterStatus filterStatus = FilterStatus();
-  // var listFilter = ;
-
+class _HistoryPageState extends State<HistoryPage> {
   @override
   Widget build(BuildContext context) {
-
+    
     List<Request>requestList = [
-      Request(judul: "Request 1", jenis: "PO Proyek", pemberi: "Budi, Purchasing SPV", penerima: ["Icha, Purchasing Manager"], status: "Pending"),
+      Request(judul: "Request 1", jenis: "PO Proyek", pemberi: "Budi, Purchasing SPV", penerima: ["Icha, Purchasing Manager"], status: "Ditolak"),
       Request(judul: "Request 2", jenis: "Invoice Utilitas", pemberi: "Anna, Finance Head", penerima: ["Andi, Manager Proyek", "William, CEO"], status: "Diterima")
     ];
 
@@ -83,6 +74,7 @@ class _ListRequestState extends State<ListRequest> {
                               Flexible(child: Text("Diajukan oleh: " + data.pemberi, overflow: TextOverflow.ellipsis)),
                               Flexible(child: Text("Approval berikutnya: " + data.penerima[0], overflow: TextOverflow.ellipsis, maxLines: 1,)),
                               Flexible(child: Text("Status: " + data.status, overflow: TextOverflow.ellipsis)),
+                              Flexible(child: Text(DateTime.now().toString())),
                               TextButton(onPressed: (){Navigator.pushNamed(context, '/detail-request');}, child: Text("Detail"))                                               
                             ]),
                           )

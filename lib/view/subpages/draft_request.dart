@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:imperial_approval_app/components/dropdown_date.dart';
+import 'package:imperial_approval_app/components/search_bar.dart';
+import 'package:imperial_approval_app/model/request_class.dart';
 
 class DraftRequest extends StatefulWidget {
   const DraftRequest({super.key});
@@ -10,6 +13,78 @@ class DraftRequest extends StatefulWidget {
 class _DraftRequestState extends State<DraftRequest> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder(child: Text("List Draft"),);
+    
+    List<Request>requestList = [
+      Request(judul: "Request 1", jenis: "PO Proyek", pemberi: "Budi, Purchasing SPV", penerima: ["Icha, Purchasing Manager"], status: "Pending"),
+      Request(judul: "Request 2", jenis: "Invoice Utilitas", pemberi: "Anna, Finance Head", penerima: ["Andi, Manager Proyek", "William, CEO"], status: "Diterima")
+    ];
+
+    return Column(
+      children: [
+
+        // search bar
+        CustomSearchBar(),
+        SizedBox(height: 10,),
+
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            DateDropdown()
+          ],
+        ),
+
+        // list request
+        Expanded(
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                DataTable(
+                  dataRowMinHeight: 120,
+                  dataRowMaxHeight: 150,
+                  horizontalMargin: 10, // margin diujung tabel
+                  columnSpacing: 20, // spacing antara kolom
+                  // sortColumnIndex: 0,
+                  // sortAscending: true,
+                  columns: <DataColumn> [
+                    DataColumn(
+                      label: Container(child: Text("No"), width: 25),
+                    ),
+                    DataColumn(
+                      label: SizedBox(child: Text("Request")),
+                    ),
+                    // DataColumn(
+                    //   label: SizedBox(child: Text("Status"), width: fullWidth*0.25,)
+                    // ),
+                  ], 
+                      
+                  rows: requestList.map(
+                    (data) => DataRow(
+                      cells: [
+                        DataCell(Text((requestList.indexOf(data)+1).toString(), textWidthBasis: TextWidthBasis.longestLine,)),
+                        DataCell(
+                          SizedBox(
+                            child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Flexible(child: Text(data.judul, overflow: TextOverflow.ellipsis)),
+                              Text(data.jenis, overflow: TextOverflow.ellipsis),
+                              Flexible(child: Text("Diajukan oleh: " + data.pemberi, overflow: TextOverflow.ellipsis)),
+                              Flexible(child: Text("Approval berikutnya: " + data.penerima[0], overflow: TextOverflow.ellipsis, maxLines: 1,)),
+                              Flexible(child: Text("Terakhir diedit: ${DateTime.now()}", overflow: TextOverflow.ellipsis)),
+                              TextButton(onPressed: (){Navigator.pushNamed(context, '/detail-draft');}, child: Text("Detail"))                                               
+                            ]),
+                          )
+                        ),
+                      ]
+                    )).toList()
+                ),
+              ]
+            )
+          ),
+        ),
+      ],
+    );
   }
 }

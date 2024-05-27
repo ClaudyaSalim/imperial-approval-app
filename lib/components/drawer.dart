@@ -60,42 +60,49 @@ class _CustomDrawerState extends State<CustomDrawer> {
     targetPage = widget.activePage;
     selectedIndex = getSelectedIndex();
     return Drawer(
-        child: ListView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const UserAccountsDrawerHeader(accountName: Text("Test User"), accountEmail: Text("test@email.com")),
-            ListTile(
-              onTap: () {
-                selectedIndex = -1;
-                setMenuPage(selectedIndex);
-                // activePage = MenuClass("Notifikasi", Notif());
-              },
-              title: Text("Notification"), 
-              trailing: Icon(Icons.notifications_rounded),
-              selected: (targetPage.name=="Notifikasi")? true:false,
-            ),
-            Divider(),
-            ListView.builder(
-              shrinkWrap: true,
-              itemCount: menuList.length,
-              itemBuilder: (context, index) {
-                int menuIndex = index;
-                bool selected = false;
-                if(menuIndex==selectedIndex){
-                  selected = true;
-                }
-                return ListTile(
-                  onTap: () {
-                    selectedIndex = menuIndex;
-                    setMenuPage(selectedIndex);
-                  },
-                  title: (
-                    Text(menuList[index].name, 
-                    style: (menuList[index].name=='Logout')?TextStyle(color: colorScheme.error):null)
+            Flexible(
+              child: ListView(
+                children: [
+                  const UserAccountsDrawerHeader(accountName: Text("Test User"), accountEmail: Text("test@email.com")),
+                  ListTile(
+                    onTap: () {
+                      selectedIndex = -1;
+                      setMenuPage(selectedIndex);
+                    },
+                    title: Text("Notification"), 
+                    trailing: Icon(Icons.notifications_rounded),
+                    selected: (targetPage.name=="Notifikasi")? true:false,
                   ),
-                  selected: selected,
-                );
-              }
-            )
+                  Divider(),
+                  ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: menuList.length,
+                    itemBuilder: (context, index) {
+                      int menuIndex = index;
+                      bool selected = false;
+                      if(menuIndex==selectedIndex){
+                        selected = true;
+                      }
+                      return ListTile(
+                        onTap: () {
+                          selectedIndex = menuIndex;
+                          setMenuPage(selectedIndex);
+                        },
+                        title: (
+                          Text(menuList[index].name, 
+                          style: (menuList[index].name=='Logout')?TextStyle(color: colorScheme.error):null)
+                        ),
+                        selected: selected,
+                      );
+                    }
+                  )
+                ],
+              ),
+            ),
+            SizedBox(height: 30, child: Text("Versi aplikasi: Ver 1.0"))
           ],
         ),
       );

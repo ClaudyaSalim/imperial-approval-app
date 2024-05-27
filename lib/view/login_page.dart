@@ -32,7 +32,7 @@ class LoginPage extends StatelessWidget {
               ),
               SizedBox(height: 50,),
               ElevatedButton(onPressed: () => {
-                Navigator.popAndPushNamed(context, '/home')
+                Navigator.popAndPushNamed(context, '/app')
               },
                 child: Text("Masuk"),
               ), // nanti pake OTP atau verifikasi email kalo baru pertama kali login
