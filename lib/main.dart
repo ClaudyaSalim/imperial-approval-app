@@ -10,6 +10,7 @@ import 'package:imperial_approval_app/theme/text_field_theme.dart';
 import 'package:imperial_approval_app/theme/text_theme.dart';
 import 'package:imperial_approval_app/view/create_request_page.dart';
 import 'package:imperial_approval_app/view/detail_page.dart';
+import 'package:imperial_approval_app/view/subpages/draft_request.dart';
 import 'package:imperial_approval_app/view/subpages/list_request.dart';
 import 'view/login_page.dart';
 
@@ -42,6 +43,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/login':(context) => LoginPage(),
         '/app': (context) => BasePage(),
+        '/app/draft': (context) => BasePage(activePage: MenuClass("List Draft", DraftRequest()),),
         '/detail-request': (context) => DetailPage(isDraft: false,),
         '/create-request': (context) => CreatePage(),
         '/detail-draft': (context) => DetailPage(isDraft: true),

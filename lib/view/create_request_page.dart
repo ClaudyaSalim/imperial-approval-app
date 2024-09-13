@@ -15,7 +15,7 @@ class _CreatePageState extends State<CreatePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Detail Request",),
+        title: Text("Create Request",),
       ),
       body: Padding(
         padding: EdgeInsets.all(25.0),
@@ -60,9 +60,9 @@ class _CreatePageState extends State<CreatePage> {
               ],
             ),
             Gap(30),
-            ElevatedButton(onPressed: (){Navigator.pushNamed(context, '/home');}, child: Text("Kirim Request")),
+            ElevatedButton(onPressed: (){Navigator.pushNamed(context, '/app');}, child: Text("Kirim Request")),
             Gap(30),
-            OutlinedButton(onPressed: (){Navigator.pushNamed(context, '/home');}, child: Text("Simpan sebagai Draft")),
+            OutlinedButton(onPressed: (){Navigator.pushNamed(context, '/app/draft', );}, child: Text("Simpan sebagai Draft")),
           ],
         ),
       ),

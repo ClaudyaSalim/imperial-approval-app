@@ -3,6 +3,7 @@ import 'package:imperial_approval_app/model/menu_class.dart';
 import 'package:imperial_approval_app/theme/color_scheme.dart';
 import 'package:imperial_approval_app/view/base_page.dart';
 import 'package:imperial_approval_app/view/subpages/notifikasi.dart';
+import 'package:imperial_approval_app/view/subpages/profile_page.dart';
 
 class CustomDrawer extends StatefulWidget {
   CustomDrawer({super.key, required this.listMenu, required this.activePage});
@@ -36,7 +37,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
         }
       }
     }
-    return -1;
+    return -2;
   }
 
   void setMenuPage(int selectedIndex){
@@ -48,11 +49,26 @@ class _CustomDrawerState extends State<CustomDrawer> {
       if(selectedIndex==-1){
         targetPage = MenuClass("Notifikasi", Notif());
       }
+      else if (selectedIndex==-2){
+        targetPage = MenuClass("Profile", ProfilePage());
+      }
       else {
         targetPage = menuList[selectedIndex];
       }
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => BasePage(activePage: targetPage,)));
     });
+  }
+
+  Widget setDrawerHeader(Color bgColor, Color avatarColor, Color iconColor, Color textColor){
+    TextStyle textStyle = TextStyle(color: textColor);
+    return UserAccountsDrawerHeader(
+      decoration: BoxDecoration(color: bgColor),
+      currentAccountPicture: CircleAvatar(
+        child: Icon(Icons.person, color: iconColor,), 
+        backgroundColor: avatarColor,
+      ),
+      accountName: Text("Test User", style: textStyle,), accountEmail: Text("test@email.com", style: textStyle,),
+    );
   }
 
   @override
@@ -66,7 +82,15 @@ class _CustomDrawerState extends State<CustomDrawer> {
             Flexible(
               child: ListView(
                 children: [
-                  const UserAccountsDrawerHeader(accountName: Text("Test User"), accountEmail: Text("test@email.com")),
+                  InkWell(
+                    child: (selectedIndex==-2)?
+                      setDrawerHeader(colorScheme.primary, colorScheme.onPrimary, colorScheme.tertiary, colorScheme.onPrimary):
+                      setDrawerHeader(colorScheme.onPrimary, colorScheme.tertiary, colorScheme.onPrimary, colorScheme.tertiary),
+                    onTap: () {
+                      selectedIndex = -2;
+                      setMenuPage(selectedIndex);
+                    },
+                  ),
                   ListTile(
                     onTap: () {
                       selectedIndex = -1;
