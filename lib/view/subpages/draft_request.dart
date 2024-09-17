@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:imperial_approval_app/components/dropdown_date.dart';
 import 'package:imperial_approval_app/components/search_bar.dart';
 import 'package:imperial_approval_app/model/request_class.dart';
+import 'package:imperial_approval_app/theme/color_scheme.dart';
+import 'package:imperial_approval_app/theme/text_theme.dart';
 
 class DraftRequest extends StatefulWidget {
   const DraftRequest({super.key});
@@ -15,8 +17,8 @@ class _DraftRequestState extends State<DraftRequest> {
   Widget build(BuildContext context) {
     
     List<Request>requestList = [
-      Request(judul: "Request 1", jenis: "PO Proyek", pemberi: "Budi, Purchasing SPV", penerima: ["Icha, Purchasing Manager"], status: "Pending"),
-      Request(judul: "Request 2", jenis: "Invoice Utilitas", pemberi: "Anna, Finance Head", penerima: ["Andi, Manager Proyek", "William, CEO"], status: "Diterima")
+      Request(type: "PO Proyek", approvers: ["Icha, Purchasing Manager"], status: "Pending"),
+      Request(type: "Invoice Utilitas", approvers: ["Andi, Manager Proyek", "William, CEO"], status: "Diterima")
     ];
 
     return Column(
@@ -36,26 +38,24 @@ class _DraftRequestState extends State<DraftRequest> {
         // list request
         Expanded(
           child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                DataTable(
+            child: LayoutBuilder(
+              builder: (BuildContext context, BoxConstraints constraints) { 
+                return DataTable(
                   dataRowMinHeight: 120,
                   dataRowMaxHeight: 150,
                   horizontalMargin: 10, // margin diujung tabel
                   columnSpacing: 20, // spacing antara kolom
+                  headingTextStyle: textTheme.displayMedium,
+                  dataTextStyle: textTheme.bodySmall,
                   // sortColumnIndex: 0,
                   // sortAscending: true,
                   columns: <DataColumn> [
                     DataColumn(
-                      label: Container(child: Text("No"), width: 25),
+                      label: Container(child: Text("Request ID"), width: 85),
                     ),
                     DataColumn(
                       label: SizedBox(child: Text("Request")),
                     ),
-                    // DataColumn(
-                    //   label: SizedBox(child: Text("Status"), width: fullWidth*0.25,)
-                    // ),
                   ], 
                       
                   rows: requestList.map(
@@ -63,24 +63,24 @@ class _DraftRequestState extends State<DraftRequest> {
                       cells: [
                         DataCell(Text((requestList.indexOf(data)+1).toString(), textWidthBasis: TextWidthBasis.longestLine,)),
                         DataCell(
-                          SizedBox(
-                            child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Flexible(child: Text(data.judul, overflow: TextOverflow.ellipsis)),
-                              Text(data.jenis, overflow: TextOverflow.ellipsis),
-                              Flexible(child: Text("Diajukan oleh: " + data.pemberi, overflow: TextOverflow.ellipsis)),
-                              Flexible(child: Text("Approval berikutnya: " + data.penerima[0], overflow: TextOverflow.ellipsis, maxLines: 1,)),
-                              Flexible(child: Text("Terakhir diedit: ${DateTime.now()}", overflow: TextOverflow.ellipsis)),
-                              TextButton(onPressed: (){Navigator.pushNamed(context, '/detail-draft');}, child: Text("Detail"))                                               
-                            ]),
-                          )
+                            SizedBox(
+                              width: constraints.maxWidth - 85 - 20 - 50,
+                              child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(data.type, overflow: TextOverflow.ellipsis),
+                                Text("Approval berikutnya: " + data.approvers![0] + "fskjflskjdla", overflow: TextOverflow.ellipsis,)
+                                ,
+                                Text("Last Edited: " + data.status!, overflow: TextOverflow.ellipsis),
+                                TextButton(onPressed: (){Navigator.pushNamed(context, '/detail-request');}, child: Text("Detail"))                                               
+                              ]),
+                            ),
                         ),
                       ]
                     )).toList()
-                ),
-              ]
+                );
+              },
             )
           ),
         ),

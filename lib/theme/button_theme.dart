@@ -32,3 +32,10 @@ OutlinedButtonThemeData secBtnTheme = OutlinedButtonThemeData(
     textStyle: textTheme.displayMedium
   )
 );
+
+TextButtonThemeData txtBtnTheme = TextButtonThemeData(
+  style: TextButton.styleFrom(
+    minimumSize: Size.zero, // Set this
+    padding: EdgeInsets.zero, 
+  )
+);

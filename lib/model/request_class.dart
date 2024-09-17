@@ -1,10 +1,16 @@
 class Request {
 
-  late String judul;
-  late String jenis;
-  late String pemberi;
-  late List<String>penerima;
-  late String status;
+  String? id;
+  String? draftid;
+  late String type;
+  late String requestor;
+  int? price;
+  String? description;
+  List<String>? approvers;
+  String? status;
+  DateTime? dateRequested;
+  DateTime? dateChanged;
+  Request? prevRequest;
 
-  Request({required this.judul, required this.jenis, required this.pemberi, required this.penerima, required this.status});
+  Request({required this.type, this.approvers, this.status, this.dateRequested});
 }
