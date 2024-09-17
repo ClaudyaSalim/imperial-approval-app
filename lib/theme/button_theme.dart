@@ -37,5 +37,6 @@ TextButtonThemeData txtBtnTheme = TextButtonThemeData(
   style: TextButton.styleFrom(
     minimumSize: Size.zero, // Set this
     padding: EdgeInsets.zero, 
+    textStyle: TextStyle(fontWeight: FontWeight.bold)
   )
 );
