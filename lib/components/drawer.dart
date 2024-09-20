@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:imperial_approval_app/database/database.dart';
 import 'package:imperial_approval_app/model/menu_class.dart';
 import 'package:imperial_approval_app/theme/color_scheme.dart';
 import 'package:imperial_approval_app/view/base_page.dart';
@@ -6,9 +7,9 @@ import 'package:imperial_approval_app/view/subpages/notifikasi.dart';
 import 'package:imperial_approval_app/view/subpages/profile_page.dart';
 
 class CustomDrawer extends StatefulWidget {
-  CustomDrawer({super.key, required this.listMenu, required this.activePage});
+  CustomDrawer({super.key, required this.listMenu, required this.activePage, required this.db});
 
-  final List listMenu; final MenuClass activePage;
+  final List listMenu; final MenuClass activePage; DBHelper db;
 
   @override
   State<CustomDrawer> createState() => _CustomDrawerState();
@@ -40,7 +41,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
     return -2;
   }
 
-  void setMenuPage(int selectedIndex){
+  void setMenuPage(int selectedIndex, DBHelper db){
     if(selectedIndex==menuList.length-1){
       Navigator.of(context).pushNamedAndRemoveUntil('/login', (Route<dynamic> route) => false);
       return;
@@ -55,7 +56,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
       else {
         targetPage = menuList[selectedIndex];
       }
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => BasePage(activePage: targetPage,)));
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => BasePage(activePage: targetPage, db: db,)));
     });
   }
 
@@ -88,13 +89,13 @@ class _CustomDrawerState extends State<CustomDrawer> {
                       setDrawerHeader(colorScheme.onPrimary, colorScheme.tertiary, colorScheme.onPrimary, colorScheme.tertiary),
                     onTap: () {
                       selectedIndex = -2;
-                      setMenuPage(selectedIndex);
+                      setMenuPage(selectedIndex, widget.db);
                     },
                   ),
                   ListTile(
                     onTap: () {
                       selectedIndex = -1;
-                      setMenuPage(selectedIndex);
+                      setMenuPage(selectedIndex, widget.db);
                     },
                     title: Text("Notification"), 
                     trailing: Icon(Icons.notifications_rounded),
@@ -113,7 +114,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                       return ListTile(
                         onTap: () {
                           selectedIndex = menuIndex;
-                          setMenuPage(selectedIndex);
+                          setMenuPage(selectedIndex, widget.db);
                         },
                         title: (
                           Text(menuList[index].name, 

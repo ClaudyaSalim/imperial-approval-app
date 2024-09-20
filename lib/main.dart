@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:imperial_approval_app/database/database.dart';
 import 'package:imperial_approval_app/model/menu_class.dart';
 import 'package:imperial_approval_app/view/base_page.dart';
 import 'package:imperial_approval_app/theme/appbar_theme.dart';
@@ -12,14 +13,20 @@ import 'package:imperial_approval_app/view/create_request_page.dart';
 import 'package:imperial_approval_app/view/detail_page.dart';
 import 'package:imperial_approval_app/view/subpages/draft_request.dart';
 import 'package:imperial_approval_app/view/subpages/list_request.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'view/login_page.dart';
 
 void main() {
-  runApp(const MyApp());
+  var databaseFactory = databaseFactoryFfi;
+  DBHelper db = DBHelper();
+  runApp(MyApp(database: db,));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key, required this.database});
+
+  DBHelper database;
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp( 
@@ -42,9 +49,9 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/login',
       routes: {
-        '/login':(context) => LoginPage(),
-        '/app': (context) => BasePage(),
-        '/app/draft': (context) => BasePage(activePage: MenuClass("List Draft", DraftRequest()),),
+        '/login':(context) => LoginPage(db: database,),
+        '/app': (context) => BasePage(db: database,),
+        '/app/draft': (context) => BasePage(activePage: MenuClass("List Draft", DraftRequest()), db: database,),
         '/detail-request': (context) => DetailPage(isDraft: false,),
         '/create-request': (context) => CreatePage(),
         '/detail-draft': (context) => DetailPage(isDraft: true),
