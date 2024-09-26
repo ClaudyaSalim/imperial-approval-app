@@ -1,6 +1,6 @@
 class User {
-  int? id;
-  late String name;
+  String? id;
+  late String? name;
   late String email;
   late String password;
   late String div;
@@ -21,7 +21,7 @@ class User {
   }
 
   User.fromJson(Map<String, dynamic> map) { 
-    id = map['id'] as int;
+    id = map['id'] as String;
     name = map['name'] as String;
     email = map['email'] as String;
     password = map['password'] as String;

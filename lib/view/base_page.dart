@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:imperial_approval_app/database/database.dart';
 import 'package:imperial_approval_app/view/subpages/history_page.dart';
 import 'package:imperial_approval_app/view/subpages/draft_request.dart';
 import 'package:imperial_approval_app/components/drawer.dart';
@@ -8,10 +7,9 @@ import 'package:imperial_approval_app/model/menu_class.dart';
 import 'login_page.dart';
 
 class BasePage extends StatefulWidget {
-  BasePage({super.key, this.activePage, required this.db});
+  BasePage({super.key, this.activePage});
 
   MenuClass? activePage;
-  DBHelper db;
 
   @override
   State<BasePage> createState() => _BasePageState();
@@ -33,7 +31,7 @@ class _BasePageState extends State<BasePage> {
     MenuClass("List Request", ListRequest()),
     MenuClass("List Draft", DraftRequest()),
     MenuClass("History", HistoryPage()),
-    MenuClass("Logout", LoginPage(db: widget.db,))
+    MenuClass("Logout", LoginPage())
   ];
 
     if(widget.activePage==null){
@@ -48,7 +46,7 @@ class _BasePageState extends State<BasePage> {
       appBar: AppBar(
         title: Text(targetPage.name,),
       ),
-      drawer: CustomDrawer(listMenu: listMenu, activePage: targetPage, db: widget.db,),
+      drawer: CustomDrawer(listMenu: listMenu, activePage: targetPage),
       body: Padding(
         padding: EdgeInsets.all(25.0),
         // kemungkinan isi fragment disini

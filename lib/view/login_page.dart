@@ -5,20 +5,25 @@ import 'package:imperial_approval_app/theme/text_theme.dart';
 import 'package:sqflite/sqflite.dart';
 
 class LoginPage extends StatefulWidget {
-  LoginPage({super.key, required this.db});
-
-  DBHelper db;
+  LoginPage({super.key});
 
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
+
+  DBHelper db = DBHelper();
+  final loginFormKey = GlobalKey<FormState>();
+
+
   @override
   Widget build(BuildContext context) {
 
     // final ThemeData theme = Theme.of(context);
     // final TextTheme textTheme = theme.textTheme;
+    TextEditingController emailController = TextEditingController();
+    TextEditingController passController = TextEditingController();
 
     return Scaffold(
       body: Padding(
@@ -34,19 +39,49 @@ class _LoginPageState extends State<LoginPage> {
                 style: textTheme.displayLarge,
               ),
               SizedBox(height: 50,),
-              TextField(
-                decoration: InputDecoration(
-                  labelText: "Email Karyawan",
-                  hintText: "Masukkan ID Karyawan",
-                ) ,
+              Form(
+                child: Column(
+                  children: [
+                    TextFormField(
+                      controller: emailController,
+                      decoration: InputDecoration(
+                        labelText: "Email Karyawan",
+                        hintText: "Masukkan ID Karyawan",
+                      ) ,
+                    ),
+                    SizedBox(height: 50,),
+                    TextFormField(
+                      controller: passController,
+                      decoration: InputDecoration(
+                        labelText: "Password Karyawan",
+                        hintText: "Masukkan password",
+                      ) ,
+                    ),
+                    SizedBox(height: 50,),
+                    ElevatedButton(onPressed: () async {
+                      await db.initFirebase();
+                      // await db.getUsers();
+                      Map loginDetails = await db.authetication(emailController.value.text, passController.value.text); 
+                      // User? currUser = await db.authetication(emailController.value.text, passController.value.text);
+                      User? currUser = loginDetails.values.first;
+                      String error = loginDetails.keys.first;
+                      print("Curr user: ");
+                      print(currUser);
+                      if(currUser != null){
+                        Navigator.popAndPushNamed(context, '/app');
+                      }
+                      else {
+                        showDialog(context: context, builder: (context) {
+                          return AlertDialog(title: Text('Login Failed'), content: Text(error),);
+                        },);
+                      }
+                    },
+                      child: Text("Masuk"),
+                    ), // nanti pake OTP atau verifikasi email kalo baru pertama kali login
+                  ],
+                ),
               ),
-              SizedBox(height: 50,),
-              ElevatedButton(onPressed: () async {
-                await widget.db.getUsers();
-                // Navigator.popAndPushNamed(context, '/app')
-              },
-                child: Text("Masuk"),
-              ), // nanti pake OTP atau verifikasi email kalo baru pertama kali login
+              
             ],
           ),
         ),
