@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:imperial_approval_app/database/database.dart';
 import 'package:imperial_approval_app/model/menu_class.dart';
+import 'package:imperial_approval_app/theme/alert_dialog_theme.dart';
 import 'package:imperial_approval_app/view/base_page.dart';
 import 'package:imperial_approval_app/theme/appbar_theme.dart';
 import 'package:imperial_approval_app/theme/button_theme.dart';
@@ -48,7 +49,8 @@ class _MyAppState extends State<MyApp> {
               searchViewTheme: searchDropDownTheme,
               appBarTheme: appBarTheme,
               drawerTheme: drawerTheme,
-              floatingActionButtonTheme: floatingBtnTheme
+              floatingActionButtonTheme: floatingBtnTheme,
+              dialogTheme: dialogTheme,
             ),
             initialRoute: '/login',
             routes: {

@@ -72,8 +72,8 @@ class _LoginPageState extends State<LoginPage> {
                       }
                       else {
                         showDialog(context: context, builder: (context) {
-                          return AlertDialog(title: Text('Login Failed'), content: Text(error),);
-                        },);
+                          return AlertDialog(title: Text('Login Failed'), content: Text(error), actions: [TextButton(onPressed: ()=>Navigator.pop(context), child: Text("Retry"))],);
+                        });
                       }
                     },
                       child: Text("Masuk"),
