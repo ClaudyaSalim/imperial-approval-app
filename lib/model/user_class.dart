@@ -29,13 +29,4 @@ class User {
     position = map['position'] as String;
     role = map['role'] as String;
   }
-
-  // factory User.fromJson(Map<String, dynamic> map) => User(
-  //   id: map['id'] as int,
-  //   name: map['name'] as String,
-  //   email: map['email'] as String,
-  //   password: map['password'] as String,
-  //   div: map['div'] as String,
-  //   position: map['position'] as String,
-  //   role: map['role'] as String);
 }

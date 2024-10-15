@@ -26,8 +26,8 @@ class _ListRequestState extends State<ListRequest> {
   Widget build(BuildContext context) {
 
     List<Request>requestList = [
-      Request(type: "PO Proyek", approvers: ["Icha, Purchasing Manager"], status: "Pending", dateRequested: DateTime.timestamp()),
-      Request(type: "Invoice Utilitas", approvers: ["Andi, Manager Proyek", "William, CEO"], status: "Diterima", dateRequested: DateTime.timestamp())
+      // Request(type: "PO Proyek", approvals: ["Icha, Purchasing Manager"], status: "Pending", dateRequested: DateTime.timestamp()),
+      // Request(type: "Invoice Utilitas", approvals: ["Andi, Manager Proyek", "William, CEO"], status: "Diterima", dateRequested: DateTime.timestamp())
     ];
 
     return Column(
@@ -77,9 +77,9 @@ class _ListRequestState extends State<ListRequest> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(data.type, overflow: TextOverflow.ellipsis),
+                                  Text(data.typeId!, overflow: TextOverflow.ellipsis),
                                   Text(data.dateRequested.toString(), overflow: TextOverflow.ellipsis),
-                                  Text("Approval berikutnya: " + data.approvers![0] + "fskjflskjdla", overflow: TextOverflow.ellipsis,)
+                                  Text("Approval berikutnya: " + data.approvals![0]!["user id"] + "fskjflskjdla", overflow: TextOverflow.ellipsis,)
                                   ,
                                   Flexible(child: Text("Status: " + data.status!, overflow: TextOverflow.ellipsis)),
                                   TextButton(onPressed: (){Navigator.pushNamed(context, '/detail-request');}, child: Text("Detail"))                                               

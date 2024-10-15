@@ -88,4 +88,12 @@ class DBHelper{
   }
 
 
+  Future getRequests(String userId) async{
+    await db!.collection("requests").where("user id").get().then((event) => {
+      for(var doc in event.docs){
+        print(doc.data())
+      }
+    });
+  }
+
 }
