@@ -17,8 +17,8 @@ class _DraftRequestState extends State<DraftRequest> {
   Widget build(BuildContext context) {
     
     List<Request>requestList = [
-      Request(type: "PO Proyek", approvers: ["Icha, Purchasing Manager"], status: "Pending"),
-      Request(type: "Invoice Utilitas", approvers: ["Andi, Manager Proyek", "William, CEO"], status: "Diterima")
+      // Request(type: "PO Proyek", approvers: ["Icha, Purchasing Manager"], status: "Pending"),
+      // Request(type: "Invoice Utilitas", approvers: ["Andi, Manager Proyek", "William, CEO"], status: "Diterima")
     ];
 
     return Column(
@@ -69,8 +69,8 @@ class _DraftRequestState extends State<DraftRequest> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(data.type, overflow: TextOverflow.ellipsis),
-                                Text("Approval berikutnya: " + data.approvers![0] + "fskjflskjdla", overflow: TextOverflow.ellipsis,)
+                                Text(data.typeId!, overflow: TextOverflow.ellipsis),
+                                Text("Approval berikutnya: " + data.approvals![0]!['user id'] + "fskjflskjdla", overflow: TextOverflow.ellipsis,)
                                 ,
                                 Text("Last Edited: " + data.status!, overflow: TextOverflow.ellipsis),
                                 TextButton(onPressed: (){Navigator.pushNamed(context, '/detail-request');}, child: Text("Detail"))                                               

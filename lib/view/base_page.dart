@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:imperial_approval_app/model/user_class.dart';
 import 'package:imperial_approval_app/view/subpages/history_page.dart';
 import 'package:imperial_approval_app/view/subpages/draft_request.dart';
 import 'package:imperial_approval_app/components/drawer.dart';
@@ -27,8 +28,10 @@ class _BasePageState extends State<BasePage> {
   @override
   Widget build(BuildContext context) {
 
+    User? currUser = ModalRoute.of(context)!.settings.arguments as User?;
+
     List listMenu = [
-    MenuClass("List Request", ListRequest()),
+    MenuClass("List Request", ListRequest(user: currUser,)),
     MenuClass("List Draft", DraftRequest()),
     MenuClass("History", HistoryPage()),
     MenuClass("Logout", LoginPage())

@@ -60,15 +60,13 @@ class _LoginPageState extends State<LoginPage> {
                     SizedBox(height: 50,),
                     ElevatedButton(onPressed: () async {
                       await db.initFirebase();
-                      // await db.getUsers();
                       Map loginDetails = await db.authetication(emailController.value.text, passController.value.text); 
-                      // User? currUser = await db.authetication(emailController.value.text, passController.value.text);
                       User? currUser = loginDetails.values.first;
                       String error = loginDetails.keys.first;
                       print("Curr user: ");
                       print(currUser);
                       if(currUser != null){
-                        Navigator.popAndPushNamed(context, '/app');
+                        Navigator.popAndPushNamed(context, '/app', arguments: currUser);
                       }
                       else {
                         showDialog(context: context, builder: (context) {

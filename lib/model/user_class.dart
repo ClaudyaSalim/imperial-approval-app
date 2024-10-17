@@ -3,7 +3,7 @@ class User {
   late String? name;
   late String email;
   late String password;
-  late String div;
+  late dynamic div;
   late String position;
   late String role;
 
@@ -25,7 +25,7 @@ class User {
     name = map['name'] as String;
     email = map['email'] as String;
     password = map['password'] as String;
-    div = map['div'] as String;
+    div = map['div'];
     position = map['position'] as String;
     role = map['role'] as String;
   }

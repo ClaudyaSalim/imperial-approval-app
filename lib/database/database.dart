@@ -1,3 +1,4 @@
+import 'dart:collection';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -5,6 +6,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:imperial_approval_app/firebase_options.dart';
+import 'package:imperial_approval_app/model/request_class.dart';
+import 'package:imperial_approval_app/model/request_type_class.dart';
 import 'package:imperial_approval_app/model/user_class.dart' as app_user;
 import 'package:path/path.dart';
 
@@ -13,13 +16,6 @@ class DBHelper{
   FirebaseFirestore? db;
 
   Future initFirebase() async {
-
-    // check correct or not
-    // if(kIsWeb){
-    //   const firebaseConfig = FirebaseOptions(apiKey: "AIzaSyAOwIcMyJye7bfVSMAPMlrX7au0Lw_9ce4", appId: "1:454517257295:web:91dda7079ec7fe4f92a63a", messagingSenderId: "454517257295", projectId: "approval-app-60411", authDomain: "approval-app-60411.firebaseapp.com", storageBucket: "approval-app-60411.appspot.com");
-    //   await Firebase.initializeApp(options: firebaseConfig);
-    // }
-    
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform
     );
@@ -88,12 +84,36 @@ class DBHelper{
   }
 
 
-  Future getRequests(String userId) async{
-    await db!.collection("requests").where("user id").get().then((event) => {
-      for(var doc in event.docs){
-        print(doc.data())
-      }
+  Future <Map<Request, RequestType>> getRequests(String userId) async{
+    print("User ID in get requests: $userId");
+    db = FirebaseFirestore.instance;
+    Map<Request, RequestType>userRequests = {};
+    await db!.collection("requests").where("user id", isEqualTo: userId).get().then((event) async {
+        for(var doc in event.docs){
+          print(doc.data());
+          Request request = Request.fromJson(doc.data());
+          RequestType? requestType = await getRequestTypeByID(request.typeId);
+          var mapResult = <Request, RequestType>{request : requestType!};
+          userRequests.addAll(mapResult);
+        }
+    },
+    onError: (e) {
+      print("Error: $e");
     });
+    return userRequests;
+  }
+
+
+  Future <RequestType?> getRequestTypeByID (requestTypeID) async {
+    RequestType? requestType;
+
+    db = FirebaseFirestore.instance;
+
+    await db!.collection("request type").where("id", isEqualTo: requestTypeID).get().then((event){
+      requestType = RequestType.fromJson(event.docs.first.data());
+    });
+
+    return requestType;
   }
 
 }

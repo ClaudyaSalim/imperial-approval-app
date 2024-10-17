@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:imperial_approval_app/model/request_type_class.dart';
 
 class Request {
@@ -8,9 +9,9 @@ class Request {
   late String requestor;
   int? price;
   String? description;
-  List<Map<String, dynamic>?>? approvals;
+  List<dynamic>? approvals;
   String? status;
-  DateTime? dateRequested;
+  Timestamp? dateRequested;
   DateTime? dateChanged;
   // Request? prevRequest;
 
@@ -18,13 +19,13 @@ class Request {
 
   Request.fromJson(Map<String, dynamic> map) {
     id = map['id'] as String;
-    draftId = map['draft id'] as String;
+    draftId = map['draft id'] as String?;
     typeId = map['request type'] as String;
     requestor = map['user id'] as String;
     price = map['price'] as int;
     description = map['description'] as String;
-    approvals = map['approvals'] as List<Map<String, dynamic>>;
+    approvals = map['approvals'] as List<dynamic>;
     status = map['status'] as String;
-    dateRequested = map['date_created'] as DateTime;
+    dateRequested = map['date_created'] as Timestamp;
   }
 }
