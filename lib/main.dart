@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:imperial_approval_app/database/database.dart';
 import 'package:imperial_approval_app/model/menu_class.dart';
+import 'package:imperial_approval_app/model/request_class.dart';
 import 'package:imperial_approval_app/theme/alert_dialog_theme.dart';
 import 'package:imperial_approval_app/view/base_page.dart';
 import 'package:imperial_approval_app/theme/appbar_theme.dart';
@@ -57,9 +58,9 @@ class _MyAppState extends State<MyApp> {
               '/login':(context) => LoginPage(),
               '/app': (context) => BasePage(),
               '/app/draft': (context) => BasePage(activePage: MenuClass("List Draft", DraftRequest()),),
-              '/detail-request': (context) => DetailPage(isDraft: false,),
+              '/detail-request': (context) => DetailPage(request: ModalRoute.of(context)!.settings.arguments as Request,),
               '/create-request': (context) => CreatePage(),
-              '/detail-draft': (context) => DetailPage(isDraft: true),
+              '/detail-draft': (context) => DetailPage(request: ModalRoute.of(context)!.settings.arguments as Request),
             },
           );
   }

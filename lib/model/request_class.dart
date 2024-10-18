@@ -5,7 +5,7 @@ class Request {
 
   String? id;
   String? draftId;
-  late String? typeId;
+  late RequestType requestType;
   late String requestor;
   int? price;
   String? description;
@@ -15,12 +15,11 @@ class Request {
   DateTime? dateChanged;
   // Request? prevRequest;
 
-  Request({required this.typeId, this.approvals, this.status, this.dateRequested});
+  Request({required this.requestType, this.approvals, this.status, this.dateRequested});
 
   Request.fromJson(Map<String, dynamic> map) {
     id = map['id'] as String;
     draftId = map['draft id'] as String?;
-    typeId = map['request type'] as String;
     requestor = map['user id'] as String;
     price = map['price'] as int;
     description = map['description'] as String;

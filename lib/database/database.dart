@@ -84,17 +84,17 @@ class DBHelper{
   }
 
 
-  Future <Map<Request, RequestType>> getRequests(String userId) async{
+  Future <List<Request>> getRequests(String userId) async{
     print("User ID in get requests: $userId");
     db = FirebaseFirestore.instance;
-    Map<Request, RequestType>userRequests = {};
+    List<Request>userRequests = [];
     await db!.collection("requests").where("user id", isEqualTo: userId).get().then((event) async {
         for(var doc in event.docs){
           print(doc.data());
           Request request = Request.fromJson(doc.data());
-          RequestType? requestType = await getRequestTypeByID(request.typeId);
-          var mapResult = <Request, RequestType>{request : requestType!};
-          userRequests.addAll(mapResult);
+          RequestType? requestType = await getRequestTypeByID(doc.data()['request type'] as String);
+          request.requestType = requestType!;
+          userRequests.add(request);
         }
     },
     onError: (e) {
@@ -114,6 +114,17 @@ class DBHelper{
     });
 
     return requestType;
+  }
+
+
+  Future <Request?> getRequestByID(requestID) async {
+    db = FirebaseFirestore.instance;
+    Request? request;
+    await db!.collection("requests").where("id", isEqualTo: requestID).get().then((event){
+      request = Request.fromJson(event.docs.first.data());
+    });
+
+    return request;
   }
 
 }

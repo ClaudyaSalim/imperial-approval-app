@@ -11,6 +11,7 @@ import 'package:imperial_approval_app/model/status_filter.dart';
 import 'package:imperial_approval_app/model/user_class.dart';
 import 'package:imperial_approval_app/theme/color_scheme.dart';
 import 'package:imperial_approval_app/theme/text_theme.dart';
+import 'package:intl/intl.dart';
 
 class ListRequest extends StatefulWidget {
   ListRequest({super.key, this.user});
@@ -23,6 +24,8 @@ class ListRequest extends StatefulWidget {
 
 class _ListRequestState extends State<ListRequest> {
 
+  DateFormat formatDate = DateFormat("EEEE, dd MMMM yyyy   HH:MM");
+
   // FilterStatus filterStatus = FilterStatus();
   // var listFilter = ;
   DBHelper db = DBHelper();
@@ -34,6 +37,7 @@ class _ListRequestState extends State<ListRequest> {
     //   Request(type: "PO Proyek", approvals: ["Icha, Purchasing Manager"], status: "Pending", dateRequested: DateTime.timestamp()),
     //   Request(type: "Invoice Utilitas", approvals: ["Andi, Manager Proyek", "William, CEO"], status: "Diterima", dateRequested: DateTime.timestamp())
     // ];
+    DateFormat formatDate = DateFormat("EEEE, dd MMMM yyyy   HH:MM");
 
     // print(widget.user?.id);
 
@@ -92,10 +96,10 @@ class _ListRequestState extends State<ListRequest> {
                           ),
                         ], 
                             
-                        rows: requestList.entries.map(
+                        rows: requestList.map(
                           (data) => DataRow(
                             cells: [
-                              DataCell(Text(data.key.id!, textWidthBasis: TextWidthBasis.longestLine,)),
+                              DataCell(Text(data.id!, textWidthBasis: TextWidthBasis.longestLine,)),
                               DataCell(
                                   SizedBox(
                                     width: constraints.maxWidth - 85 - 20 - 50,
@@ -103,11 +107,11 @@ class _ListRequestState extends State<ListRequest> {
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
-                                        Text(data.value.name!, overflow: TextOverflow.ellipsis),
-                                        Text(data.key.dateRequested!.toDate().toString(), overflow: TextOverflow.ellipsis),
+                                        Text(data.requestType.name!, overflow: TextOverflow.ellipsis),
+                                        Text(formatDate.format(data.dateRequested!.toDate()), overflow: TextOverflow.ellipsis),
                                         // Text("Approval berikutnya: " + data.key.approvals![0]!["user id"] + "fskjflskjdla", overflow: TextOverflow.ellipsis,), // liat nanti masih bisa ga
-                                        Flexible(child: Text("Status: " + data.key.status!, overflow: TextOverflow.ellipsis)),
-                                        TextButton(onPressed: (){Navigator.pushNamed(context, '/detail-request');}, child: Text("Detail"))                                               
+                                        Flexible(child: Text("Status: " + data.status!, overflow: TextOverflow.ellipsis)),
+                                        TextButton(onPressed: (){Navigator.pushNamed(context, '/detail-request', arguments: data);}, child: Text("Detail"))                                               
                                       ]),
                                   ),
                               ),
