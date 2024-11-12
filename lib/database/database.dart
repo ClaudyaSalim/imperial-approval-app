@@ -83,6 +83,16 @@ class DBHelper{
     return {error: null};
   }
 
+  Future <app_user.User?> getUserByID(userID) async {
+    db = FirebaseFirestore.instance;
+    app_user.User? user;
+    await db!.collection("users").where("id", isEqualTo: userID).get().then((event){
+      user = app_user.User.fromJson(event.docs.first.data());
+    });
+
+    return user;
+  }
+
 
   Future <List<Request>> getRequests(String userId) async{
     print("User ID in get requests: $userId");

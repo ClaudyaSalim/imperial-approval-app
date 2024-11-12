@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:imperial_approval_app/database/database.dart';
 import 'package:imperial_approval_app/model/request_class.dart';
+import 'package:imperial_approval_app/model/user_class.dart';
 import 'package:imperial_approval_app/theme/color_scheme.dart';
 import 'package:imperial_approval_app/theme/text_theme.dart';
 import 'package:intl/intl.dart';
@@ -19,6 +21,7 @@ class DetailPage extends StatefulWidget {
 class _DetailPageState extends State<DetailPage> {
 
   DateFormat formatDate = DateFormat("EEEE, dd MMMM yyyy   HH:MM");
+  DBHelper db = DBHelper();
 
   @override
   Widget build(BuildContext context) {
@@ -73,12 +76,34 @@ class _DetailPageState extends State<DetailPage> {
               // ),
               Gap(50),
               Text("Riwayat sebelumnya:"),
-              Column(
-                children: [
-                  Text("Diterima oleh: ..."),
-                  Text("Komentar: -")
-                ],
-              )
+              
+              if(request.approvals!.first.pass=="Pending")
+                Text("Belum ada riwayat persetujuan")
+              else
+                ListView.separated(
+                  shrinkWrap: true,
+                  itemCount: request.approvals!.length,
+                  itemBuilder: (context, index) { 
+                    return FutureBuilder<User?>(
+                      future: db.getUserByID(request.approvals![index].approverId),
+                      builder: (context, snapshot) {
+                        if(snapshot.data == null || snapshot.connectionState == ConnectionState.waiting){
+                          return SizedBox();
+                        }
+                        var approver = snapshot.data;
+                        return Column(
+                          children: [
+                            Text("Diterima oleh: ${approver!.name}"),
+                            Text("Komentar: ${request.approvals![index].comment}")
+                          ],
+                        );
+                      }
+                    );
+                  },
+                  separatorBuilder: (context, index) => SizedBox(height: 10,),
+                )
+                  
+                
             ],
           ),
         ),

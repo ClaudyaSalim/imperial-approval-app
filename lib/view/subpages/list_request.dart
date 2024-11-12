@@ -78,6 +78,7 @@ class _ListRequestState extends State<ListRequest> {
                     }
                     else {
                       var requestList = snapshot.data!;
+                      var nextApproval;
 
                       return DataTable(
                         dataRowMaxHeight: 150,

@@ -70,8 +70,7 @@ class _DraftRequestState extends State<DraftRequest> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(data.requestType.name!, overflow: TextOverflow.ellipsis),
-                                Text("Approval berikutnya: " + data.approvals![0]!['user id'] + "fskjflskjdla", overflow: TextOverflow.ellipsis,)
-                                ,
+                                // Text("Approval berikutnya: " + data.approvals![0]!['user id'] + "fskjflskjdla", overflow: TextOverflow.ellipsis,),
                                 Text("Last Edited: " + data.status!, overflow: TextOverflow.ellipsis),
                                 TextButton(onPressed: (){Navigator.pushNamed(context, '/detail-request');}, child: Text("Detail"))                                               
                               ]),

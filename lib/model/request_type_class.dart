@@ -5,9 +5,9 @@ class RequestType {
   List<dynamic>? requestorPosition;
   List<dynamic>? approvers;
   String? destination;
-  bool? toFinance;
+  // bool? toFinance;
 
-  RequestType(this.id, this.name, this.div, this.requestorPosition, this.approvers, this.destination, this.toFinance);
+  RequestType(this.id, this.name, this.div, this.requestorPosition, this.approvers, this.destination);
 
   RequestType.fromJson(Map<String, dynamic> map){
     id = map['id'] as String;
@@ -16,6 +16,6 @@ class RequestType {
     requestorPosition = map['requestor position'] as List<dynamic>;
     approvers = map['approvers'] as List<dynamic>;
     destination = map['destination'] as String;
-    toFinance = map['to finance'] as bool;
+    // toFinance = map['to finance'] as bool;
   }
 }
