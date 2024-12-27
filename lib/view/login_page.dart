@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:imperial_approval_app/database/database.dart';
+import 'package:imperial_approval_app/controller/user_controller.dart';
 import 'package:imperial_approval_app/model/user_class.dart';
 import 'package:imperial_approval_app/theme/text_theme.dart';
 import 'package:sqflite/sqflite.dart';
@@ -13,7 +13,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
 
-  DBHelper db = DBHelper();
+  UserController controllerUser = UserController();
   final loginFormKey = GlobalKey<FormState>();
 
 
@@ -59,8 +59,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     SizedBox(height: 50,),
                     ElevatedButton(onPressed: () async {
-                      await db.initFirebase();
-                      Map loginDetails = await db.authetication(emailController.value.text, passController.value.text); 
+                      Map loginDetails = await controllerUser.authetication(emailController.value.text, passController.value.text); 
                       User? currUser = loginDetails.values.first;
                       String error = loginDetails.keys.first;
                       print("Curr user: ");

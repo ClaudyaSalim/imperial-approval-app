@@ -4,7 +4,8 @@ import 'package:flutter/widgets.dart';
 import 'package:imperial_approval_app/components/dropdown_date.dart';
 import 'package:imperial_approval_app/components/dropdown_status.dart';
 import 'package:imperial_approval_app/components/search_bar.dart';
-import 'package:imperial_approval_app/database/database.dart';
+import 'package:imperial_approval_app/controller/list_request_controller.dart';
+import 'package:imperial_approval_app/controller/user_controller.dart';
 import 'package:imperial_approval_app/model/request_class.dart';
 import 'package:imperial_approval_app/model/status_class.dart';
 import 'package:imperial_approval_app/model/status_filter.dart';
@@ -28,7 +29,7 @@ class _ListRequestState extends State<ListRequest> {
 
   // FilterStatus filterStatus = FilterStatus();
   // var listFilter = ;
-  DBHelper db = DBHelper();
+  ListRequestController controllerList= ListRequestController();
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +62,7 @@ class _ListRequestState extends State<ListRequest> {
             child: LayoutBuilder(
               builder: (BuildContext context, BoxConstraints constraints) { 
                 return FutureBuilder(
-                  future: db.getRequests(widget.user?.id ?? ""),
+                  future: controllerList.getRequests(widget.user?.id ?? ""),
                   builder: (context, snapshot) {
                     if(snapshot.connectionState == ConnectionState.waiting){
                       return CircularProgressIndicator.adaptive();

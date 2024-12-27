@@ -1,5 +1,7 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:imperial_approval_app/database/database.dart';
+import 'package:imperial_approval_app/controller/user_controller.dart';
+import 'package:imperial_approval_app/firebase_options.dart';
 import 'package:imperial_approval_app/model/menu_class.dart';
 import 'package:imperial_approval_app/model/request_class.dart';
 import 'package:imperial_approval_app/theme/alert_dialog_theme.dart';
@@ -18,7 +20,10 @@ import 'package:imperial_approval_app/view/subpages/list_request.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'view/login_page.dart';
 
-void main() {
+void main() async {
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform
+  );
   runApp(MyApp());
 }
 
@@ -30,8 +35,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-
-  DBHelper db = DBHelper();
 
   @override
   Widget build(BuildContext context) {

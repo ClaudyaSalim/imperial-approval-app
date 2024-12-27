@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:imperial_approval_app/database/database.dart';
+import 'package:imperial_approval_app/controller/list_request_controller.dart';
+import 'package:imperial_approval_app/controller/user_controller.dart';
 import 'package:imperial_approval_app/model/request_class.dart';
 import 'package:imperial_approval_app/model/user_class.dart';
 import 'package:imperial_approval_app/theme/color_scheme.dart';
@@ -21,7 +22,7 @@ class DetailPage extends StatefulWidget {
 class _DetailPageState extends State<DetailPage> {
 
   DateFormat formatDate = DateFormat("EEEE, dd MMMM yyyy   HH:MM");
-  DBHelper db = DBHelper();
+  UserController controllerUser = UserController();
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +54,7 @@ class _DetailPageState extends State<DetailPage> {
               ),
               Gap(50),
               Text(request.requestType.name!, style: textTheme.displayLarge,),
-              Gap(50),
+              // Gap(50),
               // Text("Kepada: Pak Sunhie (Divisi & Jabatan)", style: textTheme.displayMedium,),
               Gap(50),
               Text("Harga: ${request.price}", style: textTheme.displayMedium!.copyWith(color: colorScheme.primary),),
@@ -62,7 +63,7 @@ class _DetailPageState extends State<DetailPage> {
               Gap(50),
               Text("Keterangan", style: textTheme.bodySmall,),
               Text(request.description!, style: textTheme.bodySmall,),
-              Gap(50),
+              // Gap(50),
               // Row(
               //   children: [
               //     Text("File pendukung:", style: textTheme.bodyMedium,),
@@ -76,6 +77,7 @@ class _DetailPageState extends State<DetailPage> {
               // ),
               Gap(50),
               Text("Riwayat sebelumnya:"),
+              Gap(10),
               
               if(request.approvals!.first.pass=="Pending")
                 Text("Belum ada riwayat persetujuan")
@@ -85,22 +87,23 @@ class _DetailPageState extends State<DetailPage> {
                   itemCount: request.approvals!.length,
                   itemBuilder: (context, index) { 
                     return FutureBuilder<User?>(
-                      future: db.getUserByID(request.approvals![index].approverId),
+                      future: controllerUser.getUserByID(request.approvals![index].approverId),
                       builder: (context, snapshot) {
                         if(snapshot.data == null || snapshot.connectionState == ConnectionState.waiting){
                           return SizedBox();
                         }
                         var approver = snapshot.data;
                         return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text("Diterima oleh: ${approver!.name}"),
-                            Text("Komentar: ${request.approvals![index].comment}")
+                            Text("Diterima oleh: ${approver!.name}", style: textTheme.bodySmall,),
+                            Text("Komentar: ${request.approvals![index].comment}", style: textTheme.bodySmall,)
                           ],
                         );
                       }
                     );
                   },
-                  separatorBuilder: (context, index) => SizedBox(height: 10,),
+                  separatorBuilder: (context, index) => Gap(10),
                 )
                   
                 
