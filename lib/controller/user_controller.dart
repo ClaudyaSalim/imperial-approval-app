@@ -19,6 +19,8 @@ class UserController{
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform
     );
+
+    await FirebaseAuth.instance.setPersistence(Persistence.LOCAL);
   }
 
 
@@ -92,5 +94,20 @@ class UserController{
 
     return user;
   }
-  
+
+  Future <app_user.User?> getCurrUserData() async {
+    var auth = FirebaseAuth.instance; // check if localhost is running
+    // auth.useAuthEmulator('localhost', 9099);
+    auth.userChanges();
+    User currUser= auth.currentUser!;
+    app_user.User? user;
+    await db!.collection("users").where("id", isEqualTo: currUser.uid).get().then((event){
+      user = app_user.User.fromJson(event.docs.first.data());
+    });
+
+    print("Current user: ${user!.id}");
+
+    return user;
+  }
+
 }
