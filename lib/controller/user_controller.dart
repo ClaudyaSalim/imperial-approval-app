@@ -19,8 +19,6 @@ class UserController{
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform
     );
-
-    await FirebaseAuth.instance.setPersistence(Persistence.LOCAL);
   }
 
 
@@ -96,8 +94,9 @@ class UserController{
   }
 
   Future <app_user.User?> getCurrUserData() async {
+    // final sharedPref = await SharedPreferences.getInstance();
+    db = FirebaseFirestore.instance;
     var auth = FirebaseAuth.instance; // check if localhost is running
-    // auth.useAuthEmulator('localhost', 9099);
     auth.userChanges();
     User currUser= auth.currentUser!;
     app_user.User? user;
@@ -105,7 +104,7 @@ class UserController{
       user = app_user.User.fromJson(event.docs.first.data());
     });
 
-    print("Current user: ${user!.id}");
+    print("Current user: ${user?.id}");
 
     return user;
   }
