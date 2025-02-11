@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:imperial_approval_app/controller/user_controller.dart';
 import 'package:imperial_approval_app/model/user_class.dart';
 import 'package:imperial_approval_app/theme/text_theme.dart';
-import 'package:sqflite/sqflite.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({super.key});
@@ -32,7 +31,7 @@ class _LoginPageState extends State<LoginPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Image.asset("images/imperial-group-logo.png",),
+              Image.asset("./assets/images/imperial-group-logo.png",),
               SizedBox(height: 50,),
               Text(
                 'Selamat Datang',

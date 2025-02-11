@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class MenuClass <Widget> {
   late String name;
   late Widget body;
-  bool? hasMainButton;
+  FloatingActionButton? hasMainButton;
 
   MenuClass(this.name, this.body);
 

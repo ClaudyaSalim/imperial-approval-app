@@ -19,8 +19,6 @@ class UserController{
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform
     );
-
-    await FirebaseAuth.instance.setPersistence(Persistence.LOCAL);
   }
 
 
@@ -102,7 +100,6 @@ class UserController{
   Future <app_user.User?> getCurrUserData() async {
     db = FirebaseFirestore.instance;
     var auth = FirebaseAuth.instance; // check if localhost is running
-    // auth.useAuthEmulator('localhost', 9099);
     auth.userChanges();
     User? currUser= auth.currentUser;
     print("Current user in create page: ${currUser?.uid}");

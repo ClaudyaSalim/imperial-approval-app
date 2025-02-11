@@ -21,10 +21,11 @@ import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'view/login_page.dart';
 
 void main() async {
-  runApp(MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform
   );
+  runApp(MyApp());
 }
 
 class MyApp extends StatefulWidget {
