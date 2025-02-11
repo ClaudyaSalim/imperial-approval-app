@@ -30,18 +30,20 @@ class _BasePageState extends State<BasePage> {
 
     User? currUser = ModalRoute.of(context)!.settings.arguments as User?;
 
-    List listMenu = [
-    MenuClass("List Request", ListRequest(user: currUser,)),
+    List <MenuClass>listMenu = [
+    MenuClass("List Request", ListRequest()),
     MenuClass("List Draft", DraftRequest()),
     MenuClass("History", HistoryPage()),
     MenuClass("Logout", LoginPage())
   ];
+  
+  if(mounted){
+    listMenu[0].hasMainButton = true;
+  }
 
     if(widget.activePage==null){
       widget.activePage = listMenu[0]; 
     }
-
-    listMenu[0].hasMainButton = FloatingActionButton(onPressed: (){Navigator.pushNamed(context, '/create-request');}, child: Icon(Icons.add_rounded),);
 
     MenuClass targetPage = widget.activePage!;
     
@@ -55,7 +57,9 @@ class _BasePageState extends State<BasePage> {
         // kemungkinan isi fragment disini
         child: targetPage.body,
       ),
-      floatingActionButton: targetPage.hasMainButton,
+      floatingActionButton: targetPage.hasMainButton==true? 
+                            FloatingActionButton(onPressed: (){print("sini masih masuk");Navigator.pushNamed(context, '/create-request');}, child: Icon(Icons.add_rounded),)
+                            : null,
     );
   }
 }

@@ -32,7 +32,7 @@ class _LoginPageState extends State<LoginPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Image.asset("imperial-group-logo.png",),
+              Image.asset("images/imperial-group-logo.png",),
               SizedBox(height: 50,),
               Text(
                 'Selamat Datang',

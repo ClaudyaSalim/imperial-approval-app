@@ -39,7 +39,7 @@ class UserController{
 
 
   Future <Map<String, app_user.User?>> authetication(String email, String password) async {
-    User? userLogin; String error = 'User not found';
+    User? userLogin; String error = '';
     try {
       final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email,
@@ -78,9 +78,13 @@ class UserController{
       } else if (e.code == 'user-disabled'){
         print('Your email might have been disabled.');
         error = 'Your email might have been disabled.';
+      } else if (e.code == 'network-request-failed') {
+        print("Please check your connection");
+        error = "Please check your connection";
       }
     } catch (e) {
-      print(e);
+      print("Error: $e");
+      error = e.toString();
     }
     return {error: null};
   }
@@ -96,16 +100,16 @@ class UserController{
   }
 
   Future <app_user.User?> getCurrUserData() async {
+    db = FirebaseFirestore.instance;
     var auth = FirebaseAuth.instance; // check if localhost is running
     // auth.useAuthEmulator('localhost', 9099);
     auth.userChanges();
-    User currUser= auth.currentUser!;
+    User? currUser= auth.currentUser;
+    print("Current user in create page: ${currUser?.uid}");
     app_user.User? user;
-    await db!.collection("users").where("id", isEqualTo: currUser.uid).get().then((event){
+    await db!.collection("users").where("id", isEqualTo: currUser?.uid).get().then((event){
       user = app_user.User.fromJson(event.docs.first.data());
     });
-
-    print("Current user: ${user!.id}");
 
     return user;
   }

@@ -15,9 +15,9 @@ import 'package:imperial_approval_app/theme/text_theme.dart';
 import 'package:intl/intl.dart';
 
 class ListRequest extends StatefulWidget {
-  ListRequest({super.key, this.user});
+  ListRequest({super.key});
 
-  User? user;
+  // User? user;
 
   @override
   State<ListRequest> createState() => _ListRequestState();
@@ -25,7 +25,7 @@ class ListRequest extends StatefulWidget {
 
 class _ListRequestState extends State<ListRequest> {
 
-  DateFormat formatDate = DateFormat("EEEE, dd MMMM yyyy   HH:MM");
+  // DateFormat formatDate = DateFormat("EEEE, dd MMMM yyyy   HH:MM");
 
   // FilterStatus filterStatus = FilterStatus();
   // var listFilter = ;
@@ -60,9 +60,9 @@ class _ListRequestState extends State<ListRequest> {
         Expanded(
           child: SingleChildScrollView(
             child: LayoutBuilder(
-              builder: (BuildContext context, BoxConstraints constraints) { 
+              builder: (BuildContext context, BoxConstraints constraints) {
                 return FutureBuilder(
-                  future: controllerList.getRequests(widget.user?.id ?? ""),
+                  future: controllerList.getRequests(),
                   builder: (context, snapshot) {
                     if(snapshot.connectionState == ConnectionState.waiting){
                       return CircularProgressIndicator.adaptive();

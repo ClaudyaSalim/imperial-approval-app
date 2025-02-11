@@ -1,11 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:imperial_approval_app/controller/user_controller.dart';
 import 'package:imperial_approval_app/model/request_class.dart';
 import 'package:imperial_approval_app/model/request_type_class.dart';
 
 class ListRequestController {
   FirebaseFirestore? db;
+  UserController userController = UserController();
   
-    Future <List<Request>> getRequests(String userId) async{
+    Future <List<Request>> getRequests() async{
+    var currUser = await userController.getCurrUserData();
+    String userId = currUser!.id!;
     print("User ID in get requests: $userId");
     db = FirebaseFirestore.instance;
     List<Request>userRequests = [];
