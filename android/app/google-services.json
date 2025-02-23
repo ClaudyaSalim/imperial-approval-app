@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "454517257295",
+    "project_id": "approval-app-60411",
+    "storage_bucket": "approval-app-60411.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:454517257295:android:2e3484bbf8e887b292a63a",
+        "android_client_info": {
+          "package_name": "com.example.imperial_approval_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDFLVnCpGMZx8WH2ycWzME2laeqKdj8ODo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
