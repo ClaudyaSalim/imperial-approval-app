@@ -13,7 +13,10 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
 
   UserController controllerUser = UserController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passController = TextEditingController();
   final loginFormKey = GlobalKey<FormState>();
+  bool isHidden = true;
 
 
   @override
@@ -21,8 +24,6 @@ class _LoginPageState extends State<LoginPage> {
 
     // final ThemeData theme = Theme.of(context);
     // final TextTheme textTheme = theme.textTheme;
-    TextEditingController emailController = TextEditingController();
-    TextEditingController passController = TextEditingController();
 
     return Scaffold(
       body: Padding(
@@ -51,10 +52,18 @@ class _LoginPageState extends State<LoginPage> {
                     SizedBox(height: 50,),
                     TextFormField(
                       controller: passController,
+                      obscureText: isHidden,
                       decoration: InputDecoration(
                         labelText: "Password Karyawan",
                         hintText: "Masukkan password",
+                        suffixIcon: 
+                        IconButton(onPressed: () {
+                          setState(() {
+                            isHidden = !isHidden;
+                          });
+                        }, icon: Icon(isHidden? Icons.visibility_off : Icons.visibility))
                       ) ,
+                      
                     ),
                     SizedBox(height: 50,),
                     ElevatedButton(onPressed: () async {

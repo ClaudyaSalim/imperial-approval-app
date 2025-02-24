@@ -1,15 +1,8 @@
-import 'dart:collection';
-import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/foundation.dart';
 import 'package:imperial_approval_app/firebase_options.dart';
-import 'package:imperial_approval_app/model/request_class.dart';
-import 'package:imperial_approval_app/model/request_type_class.dart';
 import 'package:imperial_approval_app/model/user_class.dart' as app_user;
-import 'package:path/path.dart';
 
 class UserController{
 
@@ -109,6 +102,28 @@ class UserController{
     });
 
     return user;
+  }
+
+  Future<bool>checkPassword (String pass) async {
+    app_user.User? currUser = await getCurrUserData();
+    print("Pass controller ${currUser!.password}");
+    if(pass != currUser!.password){
+      return false;
+    }
+    return true;
+  }
+
+  Future<String?> changePassword(String newPass) async {
+    String? errorMessage;
+    var auth = FirebaseAuth.instance;
+    var currUser = auth.currentUser;
+    await currUser!.updatePassword(newPass).onError((error,_) => errorMessage = "$error");
+    if(errorMessage!=null){
+      return errorMessage;
+    }
+    db = FirebaseFirestore.instance;
+    await db!.collection("users").doc(currUser.uid).update({"password": newPass}).onError((error, _) => errorMessage = "$error");
+    return errorMessage;
   }
 
 }

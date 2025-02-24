@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:imperial_approval_app/theme/color_scheme.dart';
-import 'package:imperial_approval_app/theme/search_bar_theme.dart';
 
 class CustomSearchBar extends StatefulWidget {
   const CustomSearchBar({super.key});

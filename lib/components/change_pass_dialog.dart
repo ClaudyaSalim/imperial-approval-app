@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:imperial_approval_app/controller/user_controller.dart';
 import 'package:imperial_approval_app/theme/color_scheme.dart';
 
 class ChangePassDialog extends StatefulWidget {
@@ -12,15 +13,20 @@ class ChangePassDialog extends StatefulWidget {
 class _ChangePassDialogState extends State<ChangePassDialog> {
 
   final formKey = GlobalKey<FormState>(debugLabel: "Form Key");
-  late String newPass;
+  String oldPass = "";
+  String newPass = "";
+  bool isHidden = true;
   TextEditingController prevPassControl = TextEditingController();
   TextEditingController newPassControl = TextEditingController();
+  TextEditingController confirmPassControl = TextEditingController();
+  UserController userController = UserController();
   
-  String? validation (field, value) {
+  String? validation (field, value){
     if(value==null || value.toString().length < 3){
       return "Field must be more than 3 characters";
     }
     else if(field=="prev"){
+      oldPass = value.toString();
       print("Checking previous password");
     }
     else if(field=="new"){
@@ -39,6 +45,7 @@ class _ChangePassDialogState extends State<ChangePassDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+      scrollable: true,
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -59,8 +66,15 @@ class _ChangePassDialogState extends State<ChangePassDialog> {
             TextFormField(
               decoration: InputDecoration(
                 labelText: "Previous Password", 
-                hintText: "Input previous password"),
+                hintText: "Input previous password",
+                suffixIcon: IconButton(onPressed: () {
+                  setState(() {
+                    isHidden = !isHidden;
+                  });
+                }, icon: Icon(isHidden? Icons.visibility_off : Icons.visibility))
+              ),
               controller: prevPassControl,
+              obscureText: isHidden,
               validator: (value) {
                 return validation("prev", value);
               },
@@ -69,8 +83,13 @@ class _ChangePassDialogState extends State<ChangePassDialog> {
             TextFormField(
               decoration: InputDecoration(
                 labelText: "New Password", 
-                hintText: "Input new password"),
+                hintText: "Input new password",
+                suffixIcon: IconButton(onPressed: (){setState(() {
+                  isHidden = !isHidden;
+                });}, icon: Icon(isHidden? Icons.visibility_off : Icons.visibility))
+              ),
               controller: newPassControl,
+              obscureText: isHidden,
               validator: (value) {
                 return validation("new", value);
               },
@@ -80,7 +99,13 @@ class _ChangePassDialogState extends State<ChangePassDialog> {
               decoration: InputDecoration(
                 labelText: "Confirm Password", 
                 hintText: "Input new password again",
-                errorMaxLines: 3),
+                errorMaxLines: 3,
+                suffixIcon: IconButton(onPressed: (){setState(() {
+                  isHidden = !isHidden;
+                });}, icon: Icon(isHidden? Icons.visibility_off : Icons.visibility),)
+              ),
+              controller: confirmPassControl,
+              obscureText: isHidden,
               validator: (value) {
                 return validation("confirm", value);
               },
@@ -100,11 +125,24 @@ class _ChangePassDialogState extends State<ChangePassDialog> {
         SizedBox(width: 20,),
 
         TextButton(
-          onPressed: () {
+          onPressed: () async {
+            
+            String? errorMessage;
             if(formKey.currentState!.validate()){
-              print("All clear");
-              print(prevPassControl.text + " " + newPassControl.text);
-              Navigator.pop(context);
+              bool isValidPass = await userController.checkPassword(oldPass);
+              if(!isValidPass){
+                showDialog(context: context, builder: (context) => AlertDialog(title: Text("Fail to update password"), content: Text("Field previous password is not same with current password"), actions: [TextButton(onPressed: () => Navigator.pop(context), child: Text("Retry"))],),);
+              }
+              else {
+                errorMessage = await userController.changePassword(newPass);
+                  if(errorMessage!=null){
+                    showDialog(context: context, builder: (context) => AlertDialog(title: Text("Fail to update password"), content: Text(errorMessage!), actions: [TextButton(onPressed: () => Navigator.pop(context), child: Text("Retry"))],),);
+                  }
+                  else {
+                    Navigator.pop(context);
+                    showDialog(context: context, builder: (context) => AlertDialog(title: Text("Update Password successful"), content: Text("New password has been activated"), actions: [TextButton(onPressed: () => Navigator.pop(context), child: Text("OK"))],));
+                  }
+              }
             }
           }, 
           child: Text("Confirm"))

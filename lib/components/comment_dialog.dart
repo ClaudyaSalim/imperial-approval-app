@@ -6,9 +6,9 @@ import 'package:imperial_approval_app/theme/color_scheme.dart';
 import '../model/request_class.dart';
 
 class CommentDialog extends StatefulWidget {
-  CommentDialog({super.key, this.request});
+  const CommentDialog({super.key, this.request});
 
-  Request? request;
+  final Request? request;
 
   @override
   State<CommentDialog> createState() => _CommentDialogState();
