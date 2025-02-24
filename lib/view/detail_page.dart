@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:imperial_approval_app/components/comment_dialog.dart';
+import 'package:imperial_approval_app/controller/approval_controller.dart';
 import 'package:imperial_approval_app/controller/list_request_controller.dart';
 import 'package:imperial_approval_app/controller/user_controller.dart';
 import 'package:imperial_approval_app/model/request_class.dart';
@@ -10,10 +12,7 @@ import 'package:imperial_approval_app/theme/text_theme.dart';
 import 'package:intl/intl.dart';
 
 class DetailPage extends StatefulWidget {
-  DetailPage({super.key, required this.request});
-
-  // bool isDraft;
-  Request request;
+  DetailPage({super.key});
 
   @override
   State<DetailPage> createState() => _DetailPageState();
@@ -23,15 +22,20 @@ class _DetailPageState extends State<DetailPage> {
 
   DateFormat formatDate = DateFormat("EEEE, dd MMMM yyyy   HH:MM");
   UserController controllerUser = UserController();
+  ApprovalController controllerApproval = ApprovalController();
 
   @override
   Widget build(BuildContext context) {
-    Request request = widget.request;
+    var arguments = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    // bool isDraft;
+    Request request = arguments['request'];
+    bool isApproval = arguments['isApproval'];
+    
     return Scaffold(
       appBar: AppBar(
-        title: Text("Detail Request",),
+        title: isApproval? Text("Detail Approval") : Text("Detail Request",),
         actions: [
-          if(widget.request.draftId==null) Icon(Icons.delete_rounded)
+          if(request.draftId!=null) Icon(Icons.delete_rounded)
         ],
       ),
       body: Padding(
@@ -54,6 +58,17 @@ class _DetailPageState extends State<DetailPage> {
               ),
               Gap(50),
               Text(request.requestType.name!, style: textTheme.displayLarge,),
+              Gap(30),
+              FutureBuilder(
+                future: controllerUser.getUserByID(request.requestor),
+                builder: (context, snapshot) {
+                  if(snapshot.data == null || snapshot.connectionState == ConnectionState.waiting){
+                    return SizedBox();
+                  }
+                  var requestor = snapshot.data;
+                  return Text("Diajukan oleh: ${requestor!.name}", style: textTheme.bodyMedium,);
+                }
+              ),
               // Gap(50),
               // Text("Kepada: Pak Sunhie (Divisi & Jabatan)", style: textTheme.displayMedium,),
               Gap(50),
@@ -78,10 +93,6 @@ class _DetailPageState extends State<DetailPage> {
               Gap(50),
               Text("Riwayat sebelumnya:"),
               Gap(10),
-              
-              if(request.approvals!.first.pass=="Pending")
-                Text("Belum ada riwayat persetujuan")
-              else
                 ListView.separated(
                   shrinkWrap: true,
                   itemCount: request.approvals!.length,
@@ -105,8 +116,36 @@ class _DetailPageState extends State<DetailPage> {
                     );
                   },
                   separatorBuilder: (context, index) => Gap(10),
-                )
-                  
+                ),
+                isApproval==true?
+                SizedBox(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Gap(50),
+                      ElevatedButton(onPressed: () async {
+                        String? errorMessage = await controllerApproval.approve(request);
+                        if(errorMessage!=null){
+                          showDialog(context: context, builder: (context) => AlertDialog(title: Text("Fail to approve request"), content: Text(errorMessage), actions: [TextButton(onPressed: ()=>Navigator.pop(context), child: Text("Retry"))],));
+                        }
+                        else {
+                          showDialog(
+                            context: context, 
+                            builder: (context) => AlertDialog(
+                              title: Text("Request has been approved"),
+                              content: Text("You will be directed to approval list page"),
+                              actions: [TextButton(onPressed: () => Navigator.pushNamedAndRemoveUntil(context, '/app/approval', (route) => false), child: Text("OK"))],
+                            )
+                          );
+                        }
+                      }, child: Text("Approve")),
+                      Gap(25),
+                      OutlinedButton(onPressed: (){
+                        showDialog(context: context, builder: (context) => CommentDialog(request: request,));
+                      }, child: Text("Reject")),
+                    ],
+                  ),
+                ) : SizedBox()
                 
             ],
           ),

@@ -44,4 +44,13 @@ class Approvals {
     pass = map['pass'] as String?;
   }
 
+  Map<String, dynamic> toJson() {
+    return {
+      "comment" : comment,
+      "date" : date,
+      "pass" : pass,
+      "user id" : approverId
+    };
+  }
+
 }

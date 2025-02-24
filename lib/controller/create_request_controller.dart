@@ -35,14 +35,14 @@ class CreateRequestController {
         if(doc.data()['div'].toString().startsWith('[')){
           List divisions = doc.data()['div'];
           for (var div in divisions) {
-            if(div == 'IT'){
+            if(div == user!.div){
               RequestType requestType = RequestType.fromJson(doc.data());
               requestTypeList.add(requestType);
             }
           }
         }
         else {
-          if(doc.data()['div']=='IT'){
+          if(doc.data()['div']==user!.div){
             RequestType requestType = RequestType.fromJson(doc.data());
             requestTypeList.add(requestType);
           }

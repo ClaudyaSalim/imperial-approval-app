@@ -113,7 +113,7 @@ class _ListRequestState extends State<ListRequest> {
                                         Text(formatDate.format(data.dateRequested!.toDate())),
                                         // Text("Approval berikutnya: " + data.key.approvals![0]!["user id"] + "fskjflskjdla", overflow: TextOverflow.ellipsis,), // liat nanti masih bisa ga
                                         Flexible(child: Text("Status: " + data.status!, overflow: TextOverflow.ellipsis)),
-                                        TextButton(onPressed: (){Navigator.pushNamed(context, '/detail-request', arguments: data);}, child: Text("Detail"))                                               
+                                        TextButton(onPressed: (){Navigator.pushNamed(context, '/detail-request', arguments: {"request": data, "isApproval": false});}, child: Text("Detail"))                                               
                                       ]),
                                   ),
                               ),

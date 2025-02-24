@@ -93,7 +93,7 @@ class _HistoryPageState extends State<HistoryPage> {
                                         Flexible(child: Text("Status: " + data.status!, overflow: TextOverflow.ellipsis)),
                                         Text(
                                           "Date ${data.status=='Diterima'?'Approved' : 'Rejected'}: \n${formatDate.format(data.dateRequested!.toDate())}"),
-                                        TextButton(onPressed: (){Navigator.pushNamed(context, '/detail-request', arguments: data);}, child: Text("Detail"))                                               
+                                        TextButton(onPressed: (){Navigator.pushNamed(context, '/detail-request', arguments: {"request": data, "isApproval": false});}, child: Text("Detail"))                                               
                                       ]),
                                   ),
                               ),

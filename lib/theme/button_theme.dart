@@ -24,11 +24,12 @@ FloatingActionButtonThemeData floatingBtnTheme = FloatingActionButtonThemeData(
 
 OutlinedButtonThemeData secBtnTheme = OutlinedButtonThemeData(
   style: OutlinedButton.styleFrom(
-    side: BorderSide(color: colorScheme.primary, width: 1.5),
+    side: BorderSide(color: colorScheme.tertiary, width: 1.5),
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(10.0)
     ),
     minimumSize: const Size.fromHeight(50),
+    foregroundColor: colorScheme.tertiary,
     textStyle: textTheme.displayMedium
   )
 );

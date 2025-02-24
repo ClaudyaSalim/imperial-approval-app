@@ -16,6 +16,7 @@ import 'package:imperial_approval_app/theme/text_theme.dart';
 import 'package:imperial_approval_app/view/create_request_page.dart';
 import 'package:imperial_approval_app/view/detail_page.dart';
 import 'package:imperial_approval_app/view/subpages/draft_request.dart';
+import 'package:imperial_approval_app/view/subpages/list_approval.dart';
 import 'package:imperial_approval_app/view/subpages/list_request.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'view/login_page.dart';
@@ -75,9 +76,11 @@ class _MyAppState extends State<MyApp> {
                   '/login':(context) => LoginPage(),
                   '/app': (context) => BasePage(),
                   '/app/draft': (context) => BasePage(activePage: MenuClass("List Draft", DraftRequest(), false),),
-                  '/detail-request': (context) => DetailPage(request: ModalRoute.of(context)!.settings.arguments as Request,),
+                  '/app/approval': (context) => BasePage(activePage: MenuClass("List Approval", ListApproval(), false),),
+                  '/detail-request': (context) => DetailPage(),
                   '/create-request': (context) => CreatePage(),
-                  '/detail-draft': (context) => DetailPage(request: ModalRoute.of(context)!.settings.arguments as Request),
+                  '/detail-draft': (context) => DetailPage(),
+                  '/detail-approval': (context) => DetailPage()
                 },
               );
       }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:imperial_approval_app/theme/color_scheme.dart';
 
 class ChangePassDialog extends StatefulWidget {
   const ChangePassDialog({super.key});
@@ -94,7 +95,7 @@ class _ChangePassDialogState extends State<ChangePassDialog> {
           onPressed: () {
             formKey.currentState!.reset();
           }, 
-          child: Text("Clear")),
+          child: Text("Clear", style: TextStyle(color: colorScheme.tertiary))),
 
         SizedBox(width: 20,),
 
