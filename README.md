@@ -27,12 +27,14 @@ The status of approval is divided into 3, which are:
    flutter run
    ```
 2. The app will direct to the login screen. Because users are retrieved from database and NOT from account creation, **use the following credentials**.
-   | Role       | Name      | Email                     | Password      |
-   | --------   | --------- | ------------------------- | ------------- |
-   | IT Staff   | Test User | test@gmail.com            | testing       |
-   | IT Manager | John Doe  | manager.it@impgroup.co.id | managerITimp  |
-  <!-- | COO        | Sun Hie   | ccs@impgroup.co.id        | sunhie123     | -->
-3. You can logout and switch to other accounts. Happy experimenting!
+   | Role               | Name         | Email                     | Password      |
+   | ------------------ | ------------ | ------------------------- | ------------- |
+   | IT Staff           | Test User    | test@gmail.com            | testing       |
+   | IT Manager         | John Doe     | manager.it@impgroup.co.id | managerITimp  |
+   | COO                | Bobby Tan    | ccs@impgroup.co.id        | coo123        |
+   | Purchasing Manager | Michelle Lie | purchase@impgroup.co.id   | purchasing123 |
+   | CFO                | Caroline     | cfo@impgroup.co.id        | cfoimp123     |
+4. You can logout and switch to other accounts. Happy experimenting!
 
 <!--
 ## Getting Started
